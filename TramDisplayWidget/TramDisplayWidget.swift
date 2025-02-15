@@ -1,91 +1,3 @@
-////
-////  TramDisplayWidget.swift
-////  TramDisplayWidget
-////
-////  Created by Flo Kleiser on 15.02.2025.
-////
-//
-//import WidgetKit
-//import SwiftUI
-//
-//struct Provider: AppIntentTimelineProvider {
-//    func placeholder(in context: Context) -> SimpleEntry {
-//        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
-//    }
-//
-//    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-//        SimpleEntry(date: Date(), configuration: configuration)
-//    }
-//    
-//    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-//        var entries: [SimpleEntry] = []
-//
-//        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-//        let currentDate = Date()
-//        for hourOffset in 0 ..< 5 {
-//            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-//            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-//            entries.append(entry)
-//        }
-//
-//        return Timeline(entries: entries, policy: .atEnd)
-//    }
-//
-////    func relevances() async -> WidgetRelevances<ConfigurationAppIntent> {
-////        // Generate a list containing the contexts this widget is relevant in.
-////    }
-//}
-//
-//struct SimpleEntry: TimelineEntry {
-//    let date: Date
-//    let configuration: ConfigurationAppIntent
-//}
-//
-//struct TramDisplayWidgetEntryView : View {
-//    var entry: Provider.Entry
-//
-//    var body: some View {
-//        Text("Time:")
-//        Text(entry.date, style: .time)
-//
-//        Text("Favorite Emoji:")
-//        Text(entry.configuration.favoriteEmoji)
-//    }
-//}
-//
-//struct TramDisplayWidget: Widget {
-//    let kind: String = "TramDisplayWidget"
-//
-//    var body: some WidgetConfiguration {
-//        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
-//            TramDisplayWidgetEntryView(entry: entry)
-//                .containerBackground(.fill.tertiary, for: .widget)
-//        }
-//    }
-//}
-//
-//extension ConfigurationAppIntent {
-//    fileprivate static var smiley: ConfigurationAppIntent {
-//        let intent = ConfigurationAppIntent()
-//        intent.favoriteEmoji = "😀"
-//        return intent
-//    }
-//    
-//    fileprivate static var starEyes: ConfigurationAppIntent {
-//        let intent = ConfigurationAppIntent()
-//        intent.favoriteEmoji = "🤩"
-//        return intent
-//    }
-//}
-//
-//#Preview(as: .systemSmall) {
-//    TramDisplayWidget()
-//} timeline: {
-//    SimpleEntry(date: .now, configuration: .smiley)
-//    SimpleEntry(date: .now, configuration: .starEyes)
-//}
-
-
 import WidgetKit
 import SwiftUI
 import Foundation
@@ -161,16 +73,6 @@ struct YourWidgetEntryView: View {
 
 }
 
-//struct TramDisplayWidget: Widget {
-//    let kind: String = "TramDisplayWidget"
-//
-//    var body: some WidgetConfiguration {
-//        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
-//            TramDisplayWidgetEntryView(entry: entry)
-//                .containerBackground(.fill.tertiary, for: .widget)
-//        }
-//    }
-//}
 
 
 struct WidgetViewPreviews: PreviewProvider {
@@ -201,7 +103,100 @@ struct YourWidget: Widget {
 
 
 
-//#Preview("Widget Preview") {
-//    YourWidgetEntryView(entry: SimpleEntry(date: Date(), departureInfo: "Dep: 12:34"))
-//    .previewContext(WidgetPreviewContext(family: .systemSmall))
+//this style looks kinda nice:
+//struct TransportWidgetEntryView: View {
+//    var entry: DepartureProvider.Entry
+//
+//    var body: some View {
+//        VStack(alignment: .leading) {
+////            Text("Next Departures").font(.headline)
+////            Text(station).font(.headline)
+//            Text("Station").font(.headline)
+//
+////            ForEach(entry.departures.prefix(3), id: \.id) { departure in
+////            ForEach(entry.departures.prefix(3).map { $0 }, id: \.id) { departure in
+//            ForEach(Array(entry.departures.prefix(3)), id: \.id) { departure in
+//                HStack {
+//                    Text(departure.number)
+//                        .bold()
+//                        .frame(width: 30, alignment: .leading)
+//
+//                    Text(departure.to)
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                    
+//                    if let departureDate = iso8601Formatter.date(from: departure.stop.departure) {
+//                                           Text(timeFormatter.string(from: departureDate))
+//                                               .frame(width: 60, alignment: .trailing)
+//                                       } else {
+//                                           Text("Unknown")
+//                                               .frame(width: 60, alignment: .trailing)
+//                                       }
+//
+//                }
+//            }
+//        }
+//        .padding()
+//        .containerBackground(.white.gradient, for: .widget)
+//        .background(Color.white) // Ensure there's a background for the widget
+//        .cornerRadius(10)
+//    }
+//}
+//
+
+
+
+
+
+//embedded solution try:
+//import WidgetKit
+//import SwiftUI
+//
+//struct Provider: TimelineProvider {
+//    func placeholder(in context: Context) -> SimpleEntry {
+//        SimpleEntry(date: Date(), content: "Loading...")
+//    }
+//
+//    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+//        let entry = SimpleEntry(date: Date(), content: "Next Tram: 5 mins")
+//        completion(entry)
+//    }
+//
+//    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
+//        var entries: [SimpleEntry] = []
+//        // Fetch data from your web app or API
+//        let currentDate = Date()
+//        for minuteOffset in 0 ..< 5 {
+//            let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset * 10, to: currentDate)!
+//            let entry = SimpleEntry(date: entryDate, content: "Next Tram: \(minuteOffset * 10) mins")
+//            entries.append(entry)
+//        }
+//        let timeline = Timeline(entries: entries, policy: .atEnd)
+//        completion(timeline)
+//    }
+//}
+//
+//struct SimpleEntry: TimelineEntry {
+//    let date: Date
+//    let content: String
+//}
+//
+//struct YourWidgetEntryView : View {
+//    var entry: Provider.Entry
+//
+//    var body: some View {
+//        Text(entry.content)
+//    }
+//}
+//
+//@main
+//struct YourWidget: Widget {
+//    let kind: String = "YourWidget"
+//
+//    var body: some WidgetConfiguration {
+//        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+//            YourWidgetEntryView(entry: entry)
+//        }
+//        .configurationDisplayName("My Widget")
+//        .description("This is an example widget.")
+//    }
 //}

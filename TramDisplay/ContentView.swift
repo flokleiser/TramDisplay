@@ -1,6 +1,22 @@
 import SwiftUI
 import WebKit
 
+struct WebView: UIViewRepresentable {
+    let urlString: String
+    
+    func makeUIView(context: Context) -> WKWebView {
+        let webView = WKWebView()
+        if let url = URL(string: urlString) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
+        return webView
+    }
+
+    func updateUIView(_ webView: WKWebView, context: Context) {
+    }
+}
+
 struct ContentView: View {
     @AppStorage("selectedStation") private var selectedStation: String = "Zürich, Toni-Areal"
     @AppStorage("selectedDestination") private var selectedDestination: String = "Zürich, Rathaus"
@@ -29,7 +45,12 @@ struct ContentView: View {
                 UserDefaults(suiteName: "group.com.yourapp")?.set(selectedStation, forKey: "selectedStation")
                 UserDefaults(suiteName: "group.com.yourapp")?.set(selectedDestination, forKey: "selectedDestination")
             }
-            .padding()
+            Divider()
+                     
+                     // **Embedding the WebView**
+                     WebView(urlString: "https://flokleiser.github.io/TransportAPITest/")
+                         .frame(height: 400) // Adjust height as needed
+
         }
     }
 }
@@ -39,3 +60,23 @@ struct ContentView: View {
     ContentView()
 //    ViewController()
 }
+
+
+
+//embedded try:
+//import WebKit
+
+//class ViewController: UIViewController {
+//    var webView: WKWebView!
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        webView = WKWebView(frame: self.view.frame)
+//        self.view.addSubview(webView)
+//        if let url = URL(string: "https://flokleiser.github.io/TransportAPITest/") {
+//            let request = URLRequest(url: url)
+//            webView.load(request)
+//        }
+//    }
+//}
+//
