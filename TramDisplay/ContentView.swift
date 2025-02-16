@@ -2,24 +2,6 @@ import SwiftUI
 import WebKit
 import Foundation
 
-struct WebView: UIViewRepresentable {
-    let urlString: String
-
-    func makeUIView(context: Context) -> WKWebView {
-        let webView = WKWebView()
-        webView.scrollView.isScrollEnabled = false
-        webView.scrollView.bounces = false
-        webView.contentMode = .scaleAspectFit
-        if let url = URL(string: urlString) {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
-        return webView
-    }
-
-    func updateUIView(_ webView: WKWebView, context: Context) {
-    }
-}
 
 struct ContentView: View {
     @AppStorage("selectedStation") private var selectedStation: String = "Zürich, Toni-Areal"
@@ -104,6 +86,7 @@ struct ContentView: View {
 private let timeFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.timeStyle = .short
+    formatter.locale = Locale(identifier: "de_CH")
     return formatter
 }()
 
@@ -125,66 +108,108 @@ struct Departure: Codable, Identifiable {
        }
 }
 
+
 struct StationBoardResponse: Codable {
-    struct StationboardEntry: Codable {
+    let stationboard: [Connection]
+    
+    struct Connection: Codable {
+        let stop: Stop
+        let passList: [PassList]?
+        
         struct Stop: Codable {
             let departure: String
         }
-        let stop: Stop
+        
+        struct PassList: Codable {
+            let station: Station
+            let departure: String?
+            
+            struct Station: Codable {
+                let name: String?
+            }
+        }
     }
-    let stationboard: [StationboardEntry]
 }
-//struct StationBoardResponse: Codable {
-//    struct StationboardEntry: Codable {
-//        struct PassListEntry: Codable {
-//            let departure: String?
-//            let station: Station
-//            
-//            struct Station: Codable {
-//                let name: String?
-//            }
-//        }
-//        let passList: [PassListEntry]
-//    }
-//    let stationboard: [StationboardEntry]
-//}
+
+
 
 
 class TransportService: ObservableObject {
     @Published var departures: [Departure] = []
+    @Published var isLoading = false
     
     func fetchDepartures(station: String, destination: String) {
-//    func fetchDepartures(station: String) {
-        let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station)&limit=3"
+//        let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station)&limit=3"
+        let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? station)&limit=3"
         print("Departures from \(station) to \(destination)")
+        print("Fetching from URL: \(apiURL)")
 
         
-        guard let url = URL(string: apiURL) else { return }
+        guard let url = URL(string: apiURL) else {
+                isLoading = false
+                return
+            }
 
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if let data = data {
-                do {
-                    let response = try JSONDecoder().decode(StationBoardResponse.self, from: data)
-                    //                    let rawResponse = try JSONSerialization.jsonObject(with: data, options: [])
-                    //                                print(rawResponse)  // This will give you the full JSON response
-                    
-                    
-                    
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                     DispatchQueue.main.async {
-                        self.departures = response.stationboard.compactMap { entry in
-                            if let date = ISO8601DateFormatter().date(from: entry.stop.departure) {
-                                return Departure(time: date)
-                            }
-                            return nil
+                        guard let self = self else { return }
+                        self.isLoading = false
+                        
+                        if let error = error {
+                            print("Error fetching data: \(error)")
+                            return
                         }
                         
+                        guard let data = data else { return }
                         
+                        do {
+                            let response = try JSONDecoder().decode(StationBoardResponse.self, from: data)
+                            print("Successfully decoded response with \(response.stationboard.count) connections")
+                            
+                            // Filter connections that pass through the destination
+                            let filteredDepartures = response.stationboard
+                                .filter { connection in
+//                                    connection.passList?.contains { pass in
+//                                        pass.station.name == destination
+//                                    } ?? false
+                                    if let passList = connection.passList {
+                                        return passList.contains { pass in
+                                            pass.station.name == destination
+                                        }
+                                    }
+                                    return false
+                                    
+                                }
+                                .compactMap { connection -> Departure? in
+                                    // Find the departure time at the destination
+                                    if let date = ISO8601DateFormatter().date(from: connection.stop.departure) {
+                                        return Departure(time: date)
+                                    }
+                                    return nil
+                                }
+                                .prefix(3)
+                            
+                            self.departures = Array(filteredDepartures)
+                        } catch {
+                            print("Error decoding JSON: \(error)")
+                            
+                            if let decodingError = error as? DecodingError {
+                                                   switch decodingError {
+                                                   case .keyNotFound(let key, let context):
+                                                       print("Key '\(key)' not found:", context.debugDescription)
+                                                   case .valueNotFound(let type, let context):
+                                                       print("Value of type '\(type)' not found:", context.debugDescription)
+                                                   case .typeMismatch(let type, let context):
+                                                       print("Type '\(type)' mismatch:", context.debugDescription)
+                                                   case .dataCorrupted(let context):
+                                                       print("Data corrupted:", context.debugDescription)
+                                                   @unknown default:
+                                                       print("Unknown decoding error")
+                                                   }
+                                               }
+                        }
                     }
-                } catch {
-                    print("Error decoding JSON: \(error)")
-                }
-            }
-        }.resume()
+                }.resume()
     }
     
 
