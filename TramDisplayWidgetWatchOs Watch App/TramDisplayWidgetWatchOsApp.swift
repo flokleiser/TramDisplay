@@ -15,3 +15,12 @@ struct TramDisplayWidgetWatchOs_Watch_AppApp: App {
         }
     }
 }
+
+//@main
+//struct TransportWatchApp: App {
+//    var body: some Scene {
+//        WindowGroup {
+//            ContentView()
+//        }
+//    }
+//}
