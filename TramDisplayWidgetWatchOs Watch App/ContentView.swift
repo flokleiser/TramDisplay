@@ -202,7 +202,177 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 }
 
-
-#Preview {
-    ContentView()
+struct ComplicationController_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            // Preview for Modular Small complication
+            CLKComplicationTemplateModularSmallStackText(
+                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+                line2TextProvider: CLKSimpleTextProvider(text: "14:30")
+            )
+            .previewContext(faceColor: .black)
+            
+            // Preview with different time
+            CLKComplicationTemplateModularSmallStackText(
+                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+                line2TextProvider: CLKSimpleTextProvider(text: "15:45")
+            )
+            .previewContext(faceColor: Color(.green))
+            
+            // Preview with different style
+            CLKComplicationTemplateModularSmallStackText(
+                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+                line2TextProvider: CLKSimpleTextProvider(text: "16:15")
+            )
+            .previewContext(faceColor: Color(.blue))
+        }
+    }
 }
+
+// Helper extension for previewing complications
+extension CLKComplicationTemplate {
+    func previewContext(faceColor: Color = .black) -> some View {
+        Image(systemName: "watch")
+            .font(.system(size: 100))
+            .foregroundColor(faceColor)
+            .overlay(
+                GeometryReader { geometry in
+                    Text("14:30")
+                        .font(.system(size: geometry.size.width * 0.2))
+                        .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.4)
+                }
+            )
+    }
+}
+
+//#Preview {
+//    ContentView()
+//}
+
+
+
+//// MARK: - Complications
+//class ComplicationController: NSObject, CLKComplicationDataSource {
+//    private let transportService = TransportService()
+//    
+//    // Supporting multiple complication families
+//    func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
+//        transportService.fetchDepartures(station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
+//        
+//        let entry: CLKComplicationTimelineEntry?
+//        
+//        switch complication.family {
+//        case .modularSmall:
+//            let template = CLKComplicationTemplateModularSmallStackText(
+//                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+//                line2TextProvider: CLKSimpleTextProvider(text: "--:--")
+//            )
+//            
+//            if let nextDeparture = transportService.departures.first {
+//                let formatter = DateFormatter()
+//                formatter.timeStyle = .short
+//                template.line2TextProvider = CLKSimpleTextProvider(text: formatter.string(from: nextDeparture.time))
+//            }
+//            
+//            entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+//            
+//        case .circularSmall:
+//            let template = CLKComplicationTemplateCircularSmallStackText(
+//                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+//                line2TextProvider: CLKSimpleTextProvider(text: "--:--")
+//            )
+//            
+//            if let nextDeparture = transportService.departures.first {
+//                let formatter = DateFormatter()
+//                formatter.timeStyle = .short
+//                template.line2TextProvider = CLKSimpleTextProvider(text: formatter.string(from: nextDeparture.time))
+//            }
+//            
+//            entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+//            
+//        case .utilitarianSmall:
+//            let template = CLKComplicationTemplateUtilitarianSmallFlat(
+//                textProvider: CLKSimpleTextProvider(text: "Next: --:--")
+//            )
+//            
+//            if let nextDeparture = transportService.departures.first {
+//                let formatter = DateFormatter()
+//                formatter.timeStyle = .short
+//                template.textProvider = CLKSimpleTextProvider(text: "Next: \(formatter.string(from: nextDeparture.time))")
+//            }
+//            
+//            entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+//            
+//        default:
+//            entry = nil
+//        }
+//        
+//        handler(entry)
+//    }
+//    
+//    func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
+//        let descriptors = [
+//            CLKComplicationDescriptor(identifier: "transportTracker",
+//                                    displayName: "Transport Tracker",
+//                                    supportedFamilies: [.modularSmall, .circularSmall, .utilitarianSmall])
+//        ]
+//        handler(descriptors)
+//    }
+//    
+//}
+//
+//// MARK: - Complications Preview Provider
+//struct ComplicationController_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            // Modular Small Preview
+//            CLKComplicationTemplateModularSmallStackText(
+//                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+//                line2TextProvider: CLKSimpleTextProvider(text: "14:30")
+//            )
+//            .previewContext(faceColor: Color(.black))
+//            
+//            // Circular Small Preview
+//            CLKComplicationTemplateCircularSmallStackText(
+//                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+//                line2TextProvider: CLKSimpleTextProvider(text: "14:30")
+//            )
+//            .previewContext(faceColor: Color(.darkGray))
+//            
+//            // Utilitarian Small Preview
+//            CLKComplicationTemplateUtilitarianSmallFlat(
+//                textProvider: CLKSimpleTextProvider(text: "Next: 14:30")
+//            )
+//            .previewContext(faceColor: Color(.systemBlue))
+//        }
+//    }
+//}
+//
+//extension CLKComplicationTemplate {
+//    func previewContext(faceColor: Color) -> some View {
+//        ZStack {
+//            Circle()
+//                .fill(faceColor)
+//                .frame(width: 100, height: 100)
+//            
+//            VStack(spacing: 2) {
+//                if let modularTemplate = self as? CLKComplicationTemplateModularSmallStackText {
+//                    Text(modularTemplate.line1TextProvider.text)
+//                        .font(.system(size: 12))
+//                    Text(modularTemplate.line2TextProvider.text)
+//                        .font(.system(size: 14))
+//                } else if let circularTemplate = self as? CLKComplicationTemplateCircularSmallStackText {
+//                    Text(circularTemplate.line1TextProvider.text)
+//                        .font(.system(size: 10))
+//                    Text(circularTemplate.line2TextProvider.text)
+//                        .font(.system(size: 12))
+//                } else if let utilitarianTemplate = self as? CLKComplicationTemplateUtilitarianSmallFlat {
+//                    Text(utilitarianTemplate.textProvider.text)
+//                        .font(.system(size: 12))
+//                }
+//            }
+//            .foregroundColor(.white)
+//        }
+//    }
+//}
+//
