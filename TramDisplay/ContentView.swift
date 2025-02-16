@@ -140,7 +140,7 @@ class TransportService: ObservableObject {
     
     func fetchDepartures(station: String, destination: String) {
 //        let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station)&limit=3"
-        let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? station)&limit=3"
+        let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? station)&limit=10"
         print("Departures from \(station) to \(destination)")
         print("Fetching from URL: \(apiURL)")
 
