@@ -17,20 +17,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5C428DAF2D620BAA0078D285 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5C6075592D60C79F0039AB7B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5C428D9E2D620BA90078D285;
-			remoteInfo = "TramDisplayWidgetWatchOs Watch App";
-		};
-		5C428DB92D620BAA0078D285 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5C6075592D60C79F0039AB7B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5C428D9E2D620BA90078D285;
-			remoteInfo = "TramDisplayWidgetWatchOs Watch App";
-		};
 		5C428DC02D620BAA0078D285 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5C6075592D60C79F0039AB7B /* Project object */;
@@ -44,20 +30,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5C428DD02D620BE90078D285;
 			remoteInfo = TramDisplayWidgetWatchOsExtension;
-		};
-		5C6075722D60C7A00039AB7B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5C6075592D60C79F0039AB7B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5C6075602D60C79F0039AB7B;
-			remoteInfo = TramDisplay;
-		};
-		5C60757C2D60C7A00039AB7B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5C6075592D60C79F0039AB7B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5C6075602D60C79F0039AB7B;
-			remoteInfo = TramDisplay;
 		};
 		5C84B9232D610EBF00AA18B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -106,12 +78,8 @@
 
 /* Begin PBXFileReference section */
 		5C428D9F2D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TramDisplayWidgetWatchOs Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C428DAE2D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TramDisplayWidgetWatchOs Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C428DB82D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TramDisplayWidgetWatchOs Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C428DD12D620BE90078D285 /* TramDisplayWidgetWatchOsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TramDisplayWidgetWatchOsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C6075612D60C79F0039AB7B /* TramDisplay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TramDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C6075712D60C7A00039AB7B /* TramDisplayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TramDisplayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C60757B2D60C7A00039AB7B /* TramDisplayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TramDisplayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C84B9122D610EBE00AA18B7 /* TramDisplayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TramDisplayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C84B9142D610EBE00AA18B7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
 		5C84B9162D610EBE00AA18B7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
@@ -138,16 +106,6 @@
 		5C428DA02D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "TramDisplayWidgetWatchOs Watch App";
-			sourceTree = "<group>";
-		};
-		5C428DB12D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "TramDisplayWidgetWatchOs Watch AppTests";
-			sourceTree = "<group>";
-		};
-		5C428DBB2D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "TramDisplayWidgetWatchOs Watch AppUITests";
 			sourceTree = "<group>";
 		};
 		5C428DD42D620BE90078D285 /* TramDisplayWidgetWatchOs */ = {
@@ -181,20 +139,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5C428DAB2D620BAA0078D285 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C428DB52D620BAA0078D285 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5C428DCE2D620BE90078D285 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -205,20 +149,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5C60755E2D60C79F0039AB7B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C60756E2D60C7A00039AB7B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C6075782D60C7A00039AB7B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -243,8 +173,6 @@
 				5C6075632D60C79F0039AB7B /* TramDisplay */,
 				5C84B9182D610EBE00AA18B7 /* TramDisplayWidget */,
 				5C428DA02D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App */,
-				5C428DB12D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppTests */,
-				5C428DBB2D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppUITests */,
 				5C428DD42D620BE90078D285 /* TramDisplayWidgetWatchOs */,
 				5C84B9132D610EBE00AA18B7 /* Frameworks */,
 				5C6075622D60C79F0039AB7B /* Products */,
@@ -255,12 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				5C6075612D60C79F0039AB7B /* TramDisplay.app */,
-				5C6075712D60C7A00039AB7B /* TramDisplayTests.xctest */,
-				5C60757B2D60C7A00039AB7B /* TramDisplayUITests.xctest */,
 				5C84B9122D610EBE00AA18B7 /* TramDisplayWidgetExtension.appex */,
 				5C428D9F2D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App.app */,
-				5C428DAE2D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppTests.xctest */,
-				5C428DB82D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppUITests.xctest */,
 				5C428DD12D620BE90078D285 /* TramDisplayWidgetWatchOsExtension.appex */,
 			);
 			name = Products;
@@ -301,52 +225,6 @@
 			productName = "TramDisplayWidgetWatchOs Watch App";
 			productReference = 5C428D9F2D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App.app */;
 			productType = "com.apple.product-type.application";
-		};
-		5C428DAD2D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5C428DC72D620BAA0078D285 /* Build configuration list for PBXNativeTarget "TramDisplayWidgetWatchOs Watch AppTests" */;
-			buildPhases = (
-				5C428DAA2D620BAA0078D285 /* Sources */,
-				5C428DAB2D620BAA0078D285 /* Frameworks */,
-				5C428DAC2D620BAA0078D285 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5C428DB02D620BAA0078D285 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				5C428DB12D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppTests */,
-			);
-			name = "TramDisplayWidgetWatchOs Watch AppTests";
-			packageProductDependencies = (
-			);
-			productName = "TramDisplayWidgetWatchOs Watch AppTests";
-			productReference = 5C428DAE2D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		5C428DB72D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5C428DCA2D620BAA0078D285 /* Build configuration list for PBXNativeTarget "TramDisplayWidgetWatchOs Watch AppUITests" */;
-			buildPhases = (
-				5C428DB42D620BAA0078D285 /* Sources */,
-				5C428DB52D620BAA0078D285 /* Frameworks */,
-				5C428DB62D620BAA0078D285 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5C428DBA2D620BAA0078D285 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				5C428DBB2D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppUITests */,
-			);
-			name = "TramDisplayWidgetWatchOs Watch AppUITests";
-			packageProductDependencies = (
-			);
-			productName = "TramDisplayWidgetWatchOs Watch AppUITests";
-			productReference = 5C428DB82D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		5C428DD02D620BE90078D285 /* TramDisplayWidgetWatchOsExtension */ = {
 			isa = PBXNativeTarget;
@@ -396,46 +274,6 @@
 			productReference = 5C6075612D60C79F0039AB7B /* TramDisplay.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5C6075702D60C7A00039AB7B /* TramDisplayTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5C6075882D60C7A00039AB7B /* Build configuration list for PBXNativeTarget "TramDisplayTests" */;
-			buildPhases = (
-				5C60756D2D60C7A00039AB7B /* Sources */,
-				5C60756E2D60C7A00039AB7B /* Frameworks */,
-				5C60756F2D60C7A00039AB7B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5C6075732D60C7A00039AB7B /* PBXTargetDependency */,
-			);
-			name = TramDisplayTests;
-			packageProductDependencies = (
-			);
-			productName = TramDisplayTests;
-			productReference = 5C6075712D60C7A00039AB7B /* TramDisplayTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		5C60757A2D60C7A00039AB7B /* TramDisplayUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5C60758B2D60C7A00039AB7B /* Build configuration list for PBXNativeTarget "TramDisplayUITests" */;
-			buildPhases = (
-				5C6075772D60C7A00039AB7B /* Sources */,
-				5C6075782D60C7A00039AB7B /* Frameworks */,
-				5C6075792D60C7A00039AB7B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5C60757D2D60C7A00039AB7B /* PBXTargetDependency */,
-			);
-			name = TramDisplayUITests;
-			packageProductDependencies = (
-			);
-			productName = TramDisplayUITests;
-			productReference = 5C60757B2D60C7A00039AB7B /* TramDisplayUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		5C84B9112D610EBE00AA18B7 /* TramDisplayWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C84B9272D610EBF00AA18B7 /* Build configuration list for PBXNativeTarget "TramDisplayWidgetExtension" */;
@@ -471,27 +309,11 @@
 					5C428D9E2D620BA90078D285 = {
 						CreatedOnToolsVersion = 16.2;
 					};
-					5C428DAD2D620BAA0078D285 = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 5C428D9E2D620BA90078D285;
-					};
-					5C428DB72D620BAA0078D285 = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 5C428D9E2D620BA90078D285;
-					};
 					5C428DD02D620BE90078D285 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 					5C6075602D60C79F0039AB7B = {
 						CreatedOnToolsVersion = 16.2;
-					};
-					5C6075702D60C7A00039AB7B = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 5C6075602D60C79F0039AB7B;
-					};
-					5C60757A2D60C7A00039AB7B = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 5C6075602D60C79F0039AB7B;
 					};
 					5C84B9112D610EBE00AA18B7 = {
 						CreatedOnToolsVersion = 16.2;
@@ -513,12 +335,8 @@
 			projectRoot = "";
 			targets = (
 				5C6075602D60C79F0039AB7B /* TramDisplay */,
-				5C6075702D60C7A00039AB7B /* TramDisplayTests */,
-				5C60757A2D60C7A00039AB7B /* TramDisplayUITests */,
 				5C84B9112D610EBE00AA18B7 /* TramDisplayWidgetExtension */,
 				5C428D9E2D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App */,
-				5C428DAD2D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppTests */,
-				5C428DB72D620BAA0078D285 /* TramDisplayWidgetWatchOs Watch AppUITests */,
 				5C428DD02D620BE90078D285 /* TramDisplayWidgetWatchOsExtension */,
 			);
 		};
@@ -526,20 +344,6 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		5C428D9D2D620BA90078D285 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C428DAC2D620BAA0078D285 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C428DB62D620BAA0078D285 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -554,20 +358,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5C60755F2D60C79F0039AB7B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C60756F2D60C7A00039AB7B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C6075792D60C7A00039AB7B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -591,20 +381,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5C428DAA2D620BAA0078D285 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C428DB42D620BAA0078D285 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5C428DCD2D620BE90078D285 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -613,20 +389,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5C60755D2D60C79F0039AB7B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C60756D2D60C7A00039AB7B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C6075772D60C7A00039AB7B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -643,16 +405,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5C428DB02D620BAA0078D285 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5C428D9E2D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App */;
-			targetProxy = 5C428DAF2D620BAA0078D285 /* PBXContainerItemProxy */;
-		};
-		5C428DBA2D620BAA0078D285 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5C428D9E2D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App */;
-			targetProxy = 5C428DB92D620BAA0078D285 /* PBXContainerItemProxy */;
-		};
 		5C428DC12D620BAA0078D285 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5C428D9E2D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App */;
@@ -662,16 +414,6 @@
 			isa = PBXTargetDependency;
 			target = 5C428DD02D620BE90078D285 /* TramDisplayWidgetWatchOsExtension */;
 			targetProxy = 5C428DDC2D620BEA0078D285 /* PBXContainerItemProxy */;
-		};
-		5C6075732D60C7A00039AB7B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5C6075602D60C79F0039AB7B /* TramDisplay */;
-			targetProxy = 5C6075722D60C7A00039AB7B /* PBXContainerItemProxy */;
-		};
-		5C60757D2D60C7A00039AB7B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5C6075602D60C79F0039AB7B /* TramDisplay */;
-			targetProxy = 5C60757C2D60C7A00039AB7B /* PBXContainerItemProxy */;
 		};
 		5C84B9242D610EBF00AA18B7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -741,84 +483,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.2;
-			};
-			name = Release;
-		};
-		5C428DC82D620BAA0078D285 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3NX6T826Z;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Flo.TramDisplayWidgetWatchOs-Watch-AppTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TramDisplayWidgetWatchOs Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TramDisplayWidgetWatchOs Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 11.2;
-			};
-			name = Debug;
-		};
-		5C428DC92D620BAA0078D285 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3NX6T826Z;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Flo.TramDisplayWidgetWatchOs-Watch-AppTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TramDisplayWidgetWatchOs Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TramDisplayWidgetWatchOs Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 11.2;
-			};
-			name = Release;
-		};
-		5C428DCB2D620BAA0078D285 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3NX6T826Z;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Flo.TramDisplayWidgetWatchOs-Watch-AppUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_TARGET_NAME = "TramDisplayWidgetWatchOs Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 11.2;
-			};
-			name = Debug;
-		};
-		5C428DCC2D620BAA0078D285 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3NX6T826Z;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Flo.TramDisplayWidgetWatchOs-Watch-AppUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_TARGET_NAME = "TramDisplayWidgetWatchOs Watch App";
 				WATCHOS_DEPLOYMENT_TARGET = 11.2;
 			};
 			name = Release;
@@ -1070,78 +734,6 @@
 			};
 			name = Release;
 		};
-		5C6075892D60C7A00039AB7B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3NX6T826Z;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Flo.TramDisplayTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TramDisplay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TramDisplay";
-			};
-			name = Debug;
-		};
-		5C60758A2D60C7A00039AB7B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3NX6T826Z;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Flo.TramDisplayTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TramDisplay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TramDisplay";
-			};
-			name = Release;
-		};
-		5C60758C2D60C7A00039AB7B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3NX6T826Z;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Flo.TramDisplayUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TramDisplay;
-			};
-			name = Debug;
-		};
-		5C60758D2D60C7A00039AB7B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T3NX6T826Z;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Flo.TramDisplayUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TramDisplay;
-			};
-			name = Release;
-		};
 		5C84B9282D610EBF00AA18B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1234,24 +826,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5C428DC72D620BAA0078D285 /* Build configuration list for PBXNativeTarget "TramDisplayWidgetWatchOs Watch AppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C428DC82D620BAA0078D285 /* Debug */,
-				5C428DC92D620BAA0078D285 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5C428DCA2D620BAA0078D285 /* Build configuration list for PBXNativeTarget "TramDisplayWidgetWatchOs Watch AppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C428DCB2D620BAA0078D285 /* Debug */,
-				5C428DCC2D620BAA0078D285 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		5C428DE02D620BEA0078D285 /* Build configuration list for PBXNativeTarget "TramDisplayWidgetWatchOsExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1275,24 +849,6 @@
 			buildConfigurations = (
 				5C6075862D60C7A00039AB7B /* Debug */,
 				5C6075872D60C7A00039AB7B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5C6075882D60C7A00039AB7B /* Build configuration list for PBXNativeTarget "TramDisplayTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C6075892D60C7A00039AB7B /* Debug */,
-				5C60758A2D60C7A00039AB7B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5C60758B2D60C7A00039AB7B /* Build configuration list for PBXNativeTarget "TramDisplayUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C60758C2D60C7A00039AB7B /* Debug */,
-				5C60758D2D60C7A00039AB7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

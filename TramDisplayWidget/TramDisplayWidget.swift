@@ -2,6 +2,46 @@ import WidgetKit
 import SwiftUI
 import Foundation
 
+//struct Departure: Codable, Identifiable {
+//    let id = UUID()
+//    let time: Date
+//}
+//
+//struct TransportEntry: TimelineEntry {
+//    let date: Date
+//    let departures: [Departure]
+//}
+//
+//struct Provider: TimelineProvider {
+//    func placeholder(in context: Context) -> TransportEntry {
+//        return TransportEntry(date: Date(), departures: mockDepartures())
+//    }
+//
+//    func getSnapshot(in context: Context, completion: @escaping (TransportEntry) -> Void) {
+//        completion(TransportEntry(date: Date(), departures: loadDepartures()))
+//    }
+//
+//    func getTimeline(in context: Context, completion: @escaping (Timeline<TransportEntry>) -> Void) {
+//        let timeline = Timeline(entries: [TransportEntry(date: Date(), departures: loadDepartures())], policy: .atEnd)
+//        completion(timeline)
+//    }
+//
+//    private func loadDepartures() -> [Departure] {
+//        if let data = UserDefaults(suiteName: "group.com.yourapp")?.data(forKey: "departures"),
+//           let departures = try? JSONDecoder().decode([Departure].self, from: data) {
+//            return departures
+//        }
+//        return mockDepartures()
+//    }
+//
+//    private func mockDepartures() -> [Departure] {
+//        return [
+//            Departure(time: Date().addingTimeInterval(600)),
+//            Departure(time: Date().addingTimeInterval(1200))
+//        ]
+//    }
+//}
+
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), departureInfo: "Loading...")
