@@ -3,9 +3,12 @@ import WebKit
 
 struct WebView: UIViewRepresentable {
     let urlString: String
-    
+
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
+        webView.scrollView.isScrollEnabled = false
+        webView.scrollView.bounces = false
+        webView.contentMode = .scaleAspectFit
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             webView.load(request)
@@ -25,7 +28,10 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+
             Text("Select Station & Destination").font(.headline)
+                .padding()
+
             
             Picker("Station", selection: $selectedStation) {
                 ForEach(stations, id: \.self) { station in
@@ -45,11 +51,18 @@ struct ContentView: View {
                 UserDefaults(suiteName: "group.com.yourapp")?.set(selectedStation, forKey: "selectedStation")
                 UserDefaults(suiteName: "group.com.yourapp")?.set(selectedDestination, forKey: "selectedDestination")
             }
+//            .padding()
             Divider()
+                .padding()
+
+            
                      
-                     // **Embedding the WebView**
-                     WebView(urlString: "https://flokleiser.github.io/TransportAPITest/")
-                         .frame(height: 400) // Adjust height as needed
+            Text("Widget Preview").font(.headline)
+
+            WebView(urlString: "https://flokleiser.github.io/TransportAPITest/")
+//                .padding(0.0)
+                         .frame(height: 550)
+                         .ignoresSafeArea()
 
         }
     }
