@@ -25,7 +25,7 @@ struct ContentView: View {
     @AppStorage("selectedStation") private var selectedStation: String = "Zürich, Toni-Areal"
     @AppStorage("selectedDestination") private var selectedDestination: String = "Zürich, Rathaus"
     
-    let stations = ["Zürich, Rathaus", "Zürich, Toni-Areal", "Zürich, HB", "Zürich, Stadelhofen"]
+    let stations = ["Zürich, Rathaus", "Zürich, Toni-Areal"]
     
 
     
@@ -42,10 +42,10 @@ struct ContentView: View {
                    }
                }
                .pickerStyle(MenuPickerStyle())
-               .onChange(of: selectedStation) {
-                   transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
-               }
-
+//               .onChange(of: selectedStation) {
+//                   transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
+//               }
+               
                
                Picker("Destination", selection: $selectedDestination) {
                    ForEach(stations, id: \.self) { station in
@@ -53,15 +53,27 @@ struct ContentView: View {
                    }
                }
                .pickerStyle(MenuPickerStyle())
-               .onChange(of: selectedDestination) {
-                   transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
-               }
-
-
+//               .onChange(of: selectedDestination) {
+//                   transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
+//
+//               }
+               
+               .padding()
+               
                Button("Save Selection") {
                    UserDefaults(suiteName: "group.com.yourapp")?.set(selectedStation, forKey: "selectedStation")
                    UserDefaults(suiteName: "group.com.yourapp")?.set(selectedDestination, forKey: "selectedDestination")
+                   
+//                   print(selectedStation,selectedDestination)
+
+                   transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
+
                }
+//               .onSubmit {
+//                   print("test")
+//                   transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
+//               }
+               
                
                Divider().padding()
                
@@ -122,6 +134,21 @@ struct StationBoardResponse: Codable {
     }
     let stationboard: [StationboardEntry]
 }
+//struct StationBoardResponse: Codable {
+//    struct StationboardEntry: Codable {
+//        struct PassListEntry: Codable {
+//            let departure: String?
+//            let station: Station
+//            
+//            struct Station: Codable {
+//                let name: String?
+//            }
+//        }
+//        let passList: [PassListEntry]
+//    }
+//    let stationboard: [StationboardEntry]
+//}
+
 
 class TransportService: ObservableObject {
     @Published var departures: [Departure] = []
@@ -129,6 +156,8 @@ class TransportService: ObservableObject {
     func fetchDepartures(station: String, destination: String) {
 //    func fetchDepartures(station: String) {
         let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station)&limit=3"
+        print("Departures from \(station) to \(destination)")
+
         
         guard let url = URL(string: apiURL) else { return }
 
@@ -136,6 +165,10 @@ class TransportService: ObservableObject {
             if let data = data {
                 do {
                     let response = try JSONDecoder().decode(StationBoardResponse.self, from: data)
+                    //                    let rawResponse = try JSONSerialization.jsonObject(with: data, options: [])
+                    //                                print(rawResponse)  // This will give you the full JSON response
+                    
+                    
                     
                     DispatchQueue.main.async {
                         self.departures = response.stationboard.compactMap { entry in
@@ -144,6 +177,8 @@ class TransportService: ObservableObject {
                             }
                             return nil
                         }
+                        
+                        
                     }
                 } catch {
                     print("Error decoding JSON: \(error)")
@@ -159,6 +194,7 @@ class TransportService: ObservableObject {
 #Preview {
     ContentView()
 }
+
 
 
 
