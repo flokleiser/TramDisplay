@@ -113,7 +113,38 @@ struct ContentView: View {
     
     var body: some View {
         List {
-            Section(header: Text("Stations")) {
+            Section(header:
+                    HStack() {
+
+                               Image(systemName: "tram.fill")
+                Text("Next Departures").font(.headline)
+            }
+                .padding(.top, -27.0)
+                .frame(height: 0.0)
+            ) {
+               
+                     if transportService.isLoading {
+                        ProgressView()
+                     } else if transportService.departures.isEmpty {
+                        Text("No departures found")
+                        .foregroundColor(.secondary)
+                        } else {
+                            ForEach(transportService.departures) { departure in
+                            Text("\(departure.time, formatter: timeFormatter)")
+                                    .frame(height: 8) // Reduce row height
+//                                    .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                        }
+                     }
+                  }
+
+//            Section(header: Text("Stations").font(.headline)) {
+                Section(header:
+                        HStack() {
+
+                                   Image(systemName: "house.and.flag.fill")
+                    Text("Stations").font(.headline)
+                }
+                ) {
                 Picker("From", selection: $selectedStation) {
                     ForEach(stations, id: \.self) { station in
                         Text(station).tag(station)
@@ -127,18 +158,6 @@ struct ContentView: View {
                 }
             }
             
-            Section(header: Text("Next Departures")) {
-                if transportService.isLoading {
-                    ProgressView()
-                } else if transportService.departures.isEmpty {
-                    Text("No departures found")
-                        .foregroundColor(.secondary)
-                } else {
-                    ForEach(transportService.departures) { departure in
-                        Text("\(departure.time, formatter: timeFormatter)")
-                    }
-                }
-            }
         }
         .onChange(of: selectedStation) { oldValue, newValue in
                     transportService.fetchDepartures(station: newValue, destination: selectedDestination)
@@ -153,101 +172,103 @@ struct ContentView: View {
                 .digitalCrownRotation(detent: $transportService.crownValue, from: 0, through: 1, by: 0.1, sensitivity: .medium, isContinuous: false, isHapticFeedbackEnabled: true) { _ in
                     transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
                 }
+//                .listStyle(PlainListStyle())
+
        
     }
 }
 
 // MARK: -apple watch face complication thingy
-class ComplicationController: NSObject, CLKComplicationDataSource {
-    private let transportService = TransportService()
-    
-    func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        transportService.fetchDepartures(station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
-        
-        switch complication.family {
-        case .modularSmall:
-            let template = CLKComplicationTemplateModularSmallStackText(
-                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
-                line2TextProvider: CLKSimpleTextProvider(text: "--:--")
-            )
-            
-            if let nextDeparture = transportService.departures.first {
-                let formatter = DateFormatter()
-                formatter.timeStyle = .short
-                template.line2TextProvider = CLKSimpleTextProvider(text: formatter.string(from: nextDeparture.time))
-            }
-            
-            let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
-            handler(entry)
-            
-        default:
-            handler(nil)
-        }
-    }
-    
-    func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
-        handler([])
-    }
-    
-    func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
-        handler(.showOnLockScreen)
-    }
-    
-    func getTimelineStartDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
-        handler(Date())
-    }
-    
-    func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
-        handler(Date().addingTimeInterval(3600)) // 1 hour from now
-    }
-}
+//class ComplicationController: NSObject, CLKComplicationDataSource {
+//    private let transportService = TransportService()
+//    
+//    func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
+//        transportService.fetchDepartures(station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
+//        
+//        switch complication.family {
+//        case .modularSmall:
+//            let template = CLKComplicationTemplateModularSmallStackText(
+//                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+//                line2TextProvider: CLKSimpleTextProvider(text: "--:--")
+//            )
+//            
+//            if let nextDeparture = transportService.departures.first {
+//                let formatter = DateFormatter()
+//                formatter.timeStyle = .short
+//                template.line2TextProvider = CLKSimpleTextProvider(text: formatter.string(from: nextDeparture.time))
+//            }
+//            
+//            let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+//            handler(entry)
+//            
+//        default:
+//            handler(nil)
+//        }
+//    }
+//    
+//    func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
+//        handler([])
+//    }
+//    
+//    func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
+//        handler(.showOnLockScreen)
+//    }
+//    
+//    func getTimelineStartDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
+//        handler(Date())
+//    }
+//    
+//    func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
+//        handler(Date().addingTimeInterval(3600)) // 1 hour from now
+//    }
+//}
 
-struct ComplicationController_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            // Preview for Modular Small complication
-            CLKComplicationTemplateModularSmallStackText(
-                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
-                line2TextProvider: CLKSimpleTextProvider(text: "14:30")
-            )
-            .previewContext(faceColor: .black)
-            
-            // Preview with different time
-            CLKComplicationTemplateModularSmallStackText(
-                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
-                line2TextProvider: CLKSimpleTextProvider(text: "15:45")
-            )
-            .previewContext(faceColor: Color(.green))
-            
-            // Preview with different style
-            CLKComplicationTemplateModularSmallStackText(
-                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
-                line2TextProvider: CLKSimpleTextProvider(text: "16:15")
-            )
-            .previewContext(faceColor: Color(.blue))
-        }
-    }
-}
+//struct ComplicationController_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            // Preview for Modular Small complication
+//            CLKComplicationTemplateModularSmallStackText(
+//                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+//                line2TextProvider: CLKSimpleTextProvider(text: "14:30")
+//            )
+//            .previewContext(faceColor: .black)
+//            
+//            // Preview with different time
+//            CLKComplicationTemplateModularSmallStackText(
+//                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+//                line2TextProvider: CLKSimpleTextProvider(text: "15:45")
+//            )
+//            .previewContext(faceColor: Color(.green))
+//            
+//            // Preview with different style
+//            CLKComplicationTemplateModularSmallStackText(
+//                line1TextProvider: CLKSimpleTextProvider(text: "Next"),
+//                line2TextProvider: CLKSimpleTextProvider(text: "16:15")
+//            )
+//            .previewContext(faceColor: Color(.blue))
+//        }
+//    }
+//}
 
 // Helper extension for previewing complications
-extension CLKComplicationTemplate {
-    func previewContext(faceColor: Color = .black) -> some View {
-        Image(systemName: "watch")
-            .font(.system(size: 100))
-            .foregroundColor(faceColor)
-            .overlay(
-                GeometryReader { geometry in
-                    Text("14:30")
-                        .font(.system(size: geometry.size.width * 0.2))
-                        .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.4)
-                }
-            )
-    }
-}
-
-//#Preview {
-//    ContentView()
+//extension CLKComplicationTemplate {
+//    func previewContext(faceColor: Color = .black) -> some View {
+//        Image(systemName: "watch")
+//            .font(.system(size: 100))
+//            .foregroundColor(faceColor)
+//            .overlay(
+//                GeometryReader { geometry in
+//                    Text("14:30")
+//                        .font(.system(size: geometry.size.width * 0.2))
+//                        .position(x: geometry.size.width * 0.5, y: geometry.size.height * 0.4)
+//                }
+//            )
+//    }
 //}
+
+#Preview {
+    ContentView()
+}
 
 
 
