@@ -41,7 +41,6 @@ struct StationBoardResponse: Codable {
     }
 }
 
-//private let timeFormatter: DateFormatter = {
 let timeFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.timeStyle = .short
@@ -83,7 +82,6 @@ class TransportService: ObservableObject {
                             let response = try JSONDecoder().decode(StationBoardResponse.self, from: data)
                             print("Successfully decoded response with \(response.stationboard.count) connections")
 
-                            // Filter connections that pass through the destination
                             let filteredDepartures = response.stationboard
                                 .filter { connection in
                                     if let passList = connection.passList {
@@ -95,7 +93,6 @@ class TransportService: ObservableObject {
 
                                 }
                                 .compactMap { connection -> Departure? in
-                                    // Find the departure time at the destination
                                     if let date = ISO8601DateFormatter().date(from: connection.stop.departure) {
                                         return Departure(time: date)
                                     }

@@ -1,10 +1,3 @@
-//
-//  AppIntent.swift
-//  TramDisplayWidgetWatchOs
-//
-//  Created by Flo Kleiser on 16.02.2025.
-//
-
 import WidgetKit
 import AppIntents
 

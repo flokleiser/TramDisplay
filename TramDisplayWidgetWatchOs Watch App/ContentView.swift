@@ -2,7 +2,6 @@ import SwiftUI
 import WatchKit
 import ClockKit
 
-// MARK: - Models
 struct Departure: Identifiable, Codable {
     let id = UUID()
     let time: Date
@@ -82,11 +81,6 @@ class TransportService: ObservableObject {
                     
                     self.departures = Array(filteredDepartures)
                     
-                    //haptic feedback, annoying sound tho
-//                    if !self.departures.isEmpty {
-//                        WKInterfaceDevice.current().play(.success)
-//                    }
-                    
                 } catch {
                     print("Error decoding JSON: \(error)")
                     WKInterfaceDevice.current().play(.failure)
@@ -96,7 +90,6 @@ class TransportService: ObservableObject {
     }
 }
 
-// MARK: -contentview
 struct ContentView: View {
     @State private var selectedStation: String = "Zürich, Toni-Areal"
     @State private var selectedDestination: String = "Zürich, Rathaus"
@@ -131,13 +124,11 @@ struct ContentView: View {
                         } else {
                             ForEach(transportService.departures) { departure in
                             Text("\(departure.time, formatter: timeFormatter)")
-                                    .frame(height: 8) // Reduce row height
-//                                    .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                                    .frame(height: 8)
                         }
                      }
                   }
 
-//            Section(header: Text("Stations").font(.headline)) {
                 Section(header: HStack() {Image(systemName: "house.and.flag.fill")
                     Text("Stations").font(.headline)
                 }
