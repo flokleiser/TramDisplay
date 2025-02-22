@@ -4,8 +4,14 @@
 
 ___
 
-Turns out you cant make a widget if you dont pay apple 109.- a year, and you also cant have an IOS app that shares data with the apple watch without paying apple, so this probably will never be finished
+To-Do:
+- [ ] Make widget display 3 departure times
+- [ ] Add apple watch complication so i can put it on a watch face
 
+Done:
+- [x] Apple watch app
+- [x] IOS app
+- [x] Functioning widget
 
 ![](TramDisplay/Preview%20Content/Preview%20Assets.xcassets/preview.png)
 ![](TramDisplay/Preview%20Content/Preview%20Assets.xcassets/previewWatch.png)
