@@ -30,7 +30,9 @@ struct Provider: TimelineProvider {
         print("Selected destination: \(destination)")
 
         fetchNextDeparture(station: station, destination: destination) { departureTimes in
-            let entry = SimpleEntry(date: Date(), departureTimes: [departureTimes])
+//            let entry = SimpleEntry(date: Date(), departureTimes: [departureTimes])
+            let entry = SimpleEntry(date: Date(), departureTimes: departureTimes)
+
 
             let timeline = Timeline(entries: [entry], policy: .atEnd)
             completion(timeline)
@@ -46,11 +48,11 @@ struct Stop: Codable {
     let departure: Date
 }
 
-func fetchNextDeparture(station: String, destination: String, completion: @escaping (String) -> Void) {
+func fetchNextDeparture(station: String, destination: String, completion: @escaping ([String]) -> Void) {
     let apiUrl = "https://transport.opendata.ch/v1/stationboard?station=\(station)&limit=5"
     
     guard let url = URL(string: apiUrl) else {
-        completion("Invalid URL")
+        completion(["Invalid URL"])
         return
     }
 
@@ -62,10 +64,11 @@ func fetchNextDeparture(station: String, destination: String, completion: @escap
                 }
                 return nil
             }
-            let result = departureTimes.isEmpty ? "No data" : departureTimes.joined(separator: "\n")
-                  completion(result)
+//            let result = departureTimes.isEmpty ? "No data" : departureTimes.joined(separator: "\n")
+//                  completion(result)
+            completion(departureTimes.isEmpty ? ["No data"] : departureTimes)
         } else {
-            completion("No data")
+            completion(["No data"])
         }
     }.resume()
 }
@@ -79,7 +82,7 @@ struct YourWidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
+        VStack(spacing:5) {
                 ForEach(entry.departureTimes.prefix(3), id: \.self) { time in
                     HStack {
                         Image(systemName: "tram.fill")
