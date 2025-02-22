@@ -15,7 +15,7 @@ struct ContentView: View {
        
        var body: some View {
            VStack {
-               Text("Select Station & Destination").font(.headline)
+               Text("Test Select Station & Destination").font(.headline)
                    .padding()
                
                Picker("Station", selection: $selectedStation) {
