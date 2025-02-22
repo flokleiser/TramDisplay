@@ -1,7 +1,7 @@
 # Testing the transport API as a swift widget
 
-### - Javascript implementation: https://github.com/flokleiser/TransportAPITest 
-### - Transport API: https://transport.opendata.ch/
+### Javascript implementation: https://github.com/flokleiser/TransportAPITest 
+### Transport API: https://transport.opendata.ch/
 
 ___
 
