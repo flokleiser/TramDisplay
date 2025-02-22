@@ -1,6 +1,7 @@
 import SwiftUI
 import WatchKit
 import ClockKit
+import Foundation
 
 struct Departure: Identifiable, Codable {
     let id = UUID()
@@ -85,6 +86,56 @@ class TransportService: ObservableObject {
                     print("Error decoding JSON: \(error)")
                     WKInterfaceDevice.current().play(.failure)
                 }
+            }
+        }.resume()
+    }
+}
+
+extension TransportService {
+    func fetchDepartures(station: String, destination: String, completion: @escaping ([Departure]) -> Void) {
+        let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? station)&limit=10"
+        
+        guard let url = URL(string: apiURL) else {
+            completion([])
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error fetching data: \(error)")
+                completion([])
+                return
+            }
+            
+            guard let data = data else {
+                completion([])
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                
+                let response = try decoder.decode(StationBoardResponse.self, from: data)
+                let filteredDepartures = response.stationboard
+                    .filter { connection in
+                        connection.passList?.contains { pass in
+                            pass.station.name == destination
+                        } ?? false
+                    }
+                    .compactMap { connection -> Departure? in
+                        if let date = ISO8601DateFormatter().date(from: connection.stop.departure) {
+                            return Departure(time: date)
+                        }
+                        return nil
+                    }
+                    .prefix(3)
+                
+                completion(Array(filteredDepartures))
+                
+            } catch {
+                print("Error decoding JSON: \(error)")
+                completion([])
             }
         }.resume()
     }

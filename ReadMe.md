@@ -5,9 +5,13 @@
 
 ___
 
+Current links: 
+- https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension
+- https://developer.apple.com/documentation/widgetkit/creating-accessory-widgets-and-watch-complications#Add-WidgetKit-complications-to-your-existing-watchOS-app
+
 To-Do:
-- [x] Make widget display 3 departure times
 - [ ] Add apple watch complication so i can put it on a watch face
+- [x] Make widget display 3 departure times
 - [ ] Better interface to chose other stations
 - [ ] Figure out if i can just have the widget, and no app
 

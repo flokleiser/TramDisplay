@@ -103,11 +103,21 @@
 			);
 			target = 5C84B9112D610EBE00AA18B7 /* TramDisplayWidgetExtension */;
 		};
+		5CDBBFD42D6A8318002EEAC7 /* Exceptions for "TramDisplayWidgetWatchOs Watch App" folder in "TramDisplayWidgetWatchOsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ContentView.swift,
+			);
+			target = 5C428DD02D620BE90078D285 /* TramDisplayWidgetWatchOsExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5C428DA02D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5CDBBFD42D6A8318002EEAC7 /* Exceptions for "TramDisplayWidgetWatchOs Watch App" folder in "TramDisplayWidgetWatchOsExtension" target */,
+			);
 			path = "TramDisplayWidgetWatchOs Watch App";
 			sourceTree = "<group>";
 		};
