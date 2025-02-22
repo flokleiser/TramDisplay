@@ -14,6 +14,8 @@
 		5C84B9152D610EBE00AA18B7 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C84B9142D610EBE00AA18B7 /* WidgetKit.framework */; };
 		5C84B9172D610EBE00AA18B7 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C84B9162D610EBE00AA18B7 /* SwiftUI.framework */; };
 		5C84B9252D610EBF00AA18B7 /* TramDisplayWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5C84B9122D610EBE00AA18B7 /* TramDisplayWidgetExtension.appex */; platformFilters = (ios, macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5C9BE2452D69FB1700C48703 /* TransportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BE2442D69FAA400C48703 /* TransportData.swift */; };
+		5C9BE2492D69FCC000C48703 /* TransportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BE2442D69FAA400C48703 /* TransportData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,7 @@
 		5C84B9122D610EBE00AA18B7 /* TramDisplayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TramDisplayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C84B9142D610EBE00AA18B7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
 		5C84B9162D610EBE00AA18B7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
+		5C9BE2442D69FAA400C48703 /* TransportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -170,6 +173,7 @@
 		5C6075582D60C79F0039AB7B = {
 			isa = PBXGroup;
 			children = (
+				5C9BE2432D69FA8000C48703 /* Shared */,
 				5C6075632D60C79F0039AB7B /* TramDisplay */,
 				5C84B9182D610EBE00AA18B7 /* TramDisplayWidget */,
 				5C428DA02D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App */,
@@ -197,6 +201,14 @@
 				5C84B9162D610EBE00AA18B7 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5C9BE2432D69FA8000C48703 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				5C9BE2442D69FAA400C48703 /* TransportData.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C9BE2452D69FB1700C48703 /* TransportData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C9BE2492D69FCC000C48703 /* TransportData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -693,7 +707,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Flo.TramDisplay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -728,7 +742,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Flo.TramDisplay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -769,7 +783,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -809,7 +823,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

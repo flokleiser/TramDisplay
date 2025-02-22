@@ -21,6 +21,10 @@ struct Provider: TimelineProvider {
         let destination = userDefaults?.string(forKey: "selectedDestination") ?? "Unknown Destination"
         
         print("Widget: Station: \(station), Destination: \(destination)")
+        
+        print("UserDefaults suite: \(String(describing: userDefaults))")
+        print("Selected station: \(station)")
+        print("Selected destination: \(destination)")
 
 
         fetchNextDeparture(station: station, destination: destination) { departureInfo in
@@ -33,9 +37,9 @@ struct Provider: TimelineProvider {
     }
 }
 
-struct StationBoardResponse: Codable {
-    let stationboard: [Connection]
-}
+//struct StationBoardResponse: Codable {
+//    let stationboard: [Connection]
+//}
 
 struct Connection: Codable {
     let stop: Stop
@@ -56,30 +60,32 @@ func fetchNextDeparture(station: String, destination: String, completion: @escap
     URLSession.shared.dataTask(with: url) { data, _, error in
         if let data = data, let response = try? JSONDecoder().decode(StationBoardResponse.self, from: data),
            let firstConnection = response.stationboard.first {
-            let departureTime = DateFormatter.localizedString(from: firstConnection.stop.departure, dateStyle: .none, timeStyle: .short)
-            completion("Dep: \(departureTime)")
-        } else {
-            completion("No data")
-        }
-    }.resume()
-}
+            
+//            let departureTime = DateFormatter.localizedString(from: firstConnection.stop.departure, dateStyle: .none, timeStyle: .short)
+//            completion("Dep: \(departureTime)")
+//        } else {
+//            completion("No data")
+//        }
+//    }.resume()
+//}
+            if let departureDate = ISO8601DateFormatter().date(from: firstConnection.stop.departure) {
+                          let departureTime = timeFormatter.string(from: departureDate)
+                          completion("Dep: \(departureTime)")
+                      } else {
+                          print("Error: Could not parse departure time")
+                          completion("Error parsing time")
+                      }
+                  } else {
+                      completion("No data")
+                  }
+              }.resume()
+          }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let departureInfo: String
 }
 
-//struct YourWidgetEntryView: View {
-//    var entry: Provider.Entry
-//
-//    var body: some View {
-//        Text(entry.departureInfo)
-//            .font(.headline)
-//            .padding()
-//            .containerBackground(.white.gradient, for: .widget)
-//    }
-//
-//}
 struct YourWidgetEntryView: View {
     var entry: Provider.Entry
 
@@ -88,7 +94,7 @@ struct YourWidgetEntryView: View {
             Text(entry.departureInfo)
                 .font(.headline)
                 .foregroundColor(.black) // Explicitly set color
-            Text("Updated: \(entry.date, style: .time)") // Add this to verify updates
+            Text("Updated: \(entry.date, style: .time)")
                 .font(.caption)
                 .foregroundColor(.gray)
         }
