@@ -29,7 +29,6 @@ struct Provider: TimelineProvider {
         print("Selected station: \(station)")
         print("Selected destination: \(destination)")
 
-
         fetchNextDeparture(station: station, destination: destination) { departureTimes in
             let entry = SimpleEntry(date: Date(), departureTimes: [departureTimes])
 
@@ -63,7 +62,7 @@ func fetchNextDeparture(station: String, destination: String, completion: @escap
                 }
                 return nil
             }
-            let result = departureTimes.isEmpty ? "No data" : departureTimes.joined(separator: ", ")
+            let result = departureTimes.isEmpty ? "No data" : departureTimes.joined(separator: "\n")
                   completion(result)
         } else {
             completion("No data")
@@ -81,20 +80,29 @@ struct YourWidgetEntryView: View {
 
     var body: some View {
         VStack {
-               ForEach(entry.departureTimes.prefix(3), id: \.self) { time in
-                   Text(time)
-                       .foregroundColor(.black) 
-                       .font(.system(size: 25, weight: .semibold))
-               }
+                ForEach(entry.departureTimes.prefix(3), id: \.self) { time in
+                    HStack {
+                        Image(systemName: "tram.fill")
+//                            .imageScale(.small)
+                            .font(.system(size: 17))
+                        Text(time)
+                    }
+                        .foregroundColor(.white)
+                        .font(.system(size: 25, weight: .semibold))
+                        .frame(width: 145, height: 35, alignment: .center)
 
-              //Spacer()
-               Text("Updated: \(entry.date, style: .time)")
+                        .background(Color(red:41/255, green:43/255, blue:47/255))
+                        .cornerRadius(10)
+
+                }
+                
+                Spacer()
+                Text("Updated: \(entry.date, style: .time)")
                     .font(.caption)
-                   .foregroundColor(.gray)
-           }
-           .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-           .containerBackground(.white.gradient, for: .widget)
+                    .foregroundColor(.gray)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .containerBackground(Color(red: 24/255, green: 27/255, blue: 31/255), for: .widget)
        }
    }
 
