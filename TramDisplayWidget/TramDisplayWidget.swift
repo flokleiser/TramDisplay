@@ -2,6 +2,8 @@ import WidgetKit
 import SwiftUI
 import Foundation
 
+import os.log
+
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
@@ -77,6 +79,9 @@ func fetchNextDeparture(station: String, destination: String, completion: @escap
                       }
                   } else {
                       completion("No data")
+                      print("test")
+                      os_log("test",log:.default, type:.debug)
+
                   }
               }.resume()
           }

@@ -36,8 +36,8 @@ struct ContentView: View {
                .padding()
                
                Button("Save Selection") {
-                   UserDefaults(suiteName: "group.com.yourapp")?.set(selectedStation, forKey: "selectedStation")
-                   UserDefaults(suiteName: "group.com.yourapp")?.set(selectedDestination, forKey: "selectedDestination")
+                   UserDefaults(suiteName: "group.TramDisplay.sharedDefaults")?.set(selectedStation, forKey: "selectedStation")
+                   UserDefaults(suiteName: "group.TramDisplay.sharedDefaults")?.set(selectedDestination, forKey: "selectedDestination")
                    
 
                    transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
