@@ -146,9 +146,13 @@ let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
 let defaults = UserDefaults(suiteName: appGroupIdentifier)!
 
 struct ContentView: View {
-    @State private var selectedStation: String = "Zürich, Toni-Areal"
-    @State private var selectedDestination: String = "Zürich, Rathaus"
+//    @State private var selectedStation: String = "Zürich, Toni-Areal"
+//    @State private var selectedDestination: String = "Zürich, Rathaus"
     @StateObject private var transportService = TransportService()
+    
+    @State private var selectedStation: String = UserDefaults(suiteName: appGroupIdentifier)?.string(forKey: "selectedStation") ?? "Zürich, Toni-Areal"
+    @State private var selectedDestination: String = UserDefaults(suiteName: appGroupIdentifier)?.string(forKey: "selectedDestination") ?? "Zürich, Rathaus"
+
 
 //    @AppStorage("complicationLayout") private var layout: Int = 0
     @State private var layout: Int = UserDefaults(suiteName: appGroupIdentifier)?.integer(forKey: "complicationLayout") ?? 0
@@ -238,10 +242,17 @@ struct ContentView: View {
 //            }
             
             .onChange(of: selectedStation) { oldValue, newValue in
+                defaults.set(newValue, forKey: "selectedStation")
+                defaults.synchronize()
                 transportService.fetchDepartures(station: newValue, destination: selectedDestination)
+                WidgetCenter.shared.reloadAllTimelines()
             }
             .onChange(of: selectedDestination) { oldValue, newValue in
+                defaults.set(newValue, forKey: "selectedDestination")
+                defaults.synchronize()
+
                 transportService.fetchDepartures(station: selectedStation, destination: newValue)
+                WidgetCenter.shared.reloadAllTimelines()
             }
             .onAppear {
                 transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)

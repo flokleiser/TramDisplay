@@ -2,24 +2,56 @@ import WidgetKit
 import SwiftUI
 import ClockKit
 
+
 struct ComplicationProvider: TimelineProvider {
     let transportService = TransportService()
     
+//    let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
+//    let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+//
+//    let station = defaults.string(forKey: "selectedStation") ?? "Zürich, Toni-Areal"
+//    let destination = defaults.string(forKey: "selectedDestination") ?? "Zürich, Rathaus"
+    
+    
     func getSnapshot(in context: Context, completion: @escaping (ComplicationEntry) -> Void) {
+        let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults" // Ensure this matches your App Group
+        let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+
+        let station = defaults.string(forKey: "selectedStation") ?? "Zürich, Toni-Areal"
+        let destination = defaults.string(forKey: "selectedDestination") ?? "Zürich, Rathaus"
+        
         let entry = ComplicationEntry(
             date: Date(),
 //            departure: Departure(time: Date()))
-            departures: [Departure(time: Date())]
+            departures: [Departure(time: Date())],
+            station: station,
+            destination: destination
             )
         completion(entry)
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<ComplicationEntry>) -> Void) {
-        transportService.fetchDepartures(station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus") { departures in
+        
+        let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
+        let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+        
+        let station = defaults.string(forKey: "selectedStation") ?? "Zürich, Toni-Areal"
+        let destination = defaults.string(forKey: "selectedDestination") ?? "Zürich, Rathaus"
+
+
+
+//        transportService.fetchDepartures(station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus") { departures in
+        transportService.fetchDepartures(station: station, destination: destination) { departures in
+
 //            let entries = departures.map { departure in
 //                ComplicationEntry(date: Date(), departure: departure)
 //            }
-            let entry = ComplicationEntry(date: Date(), departures: departures)
+            let entry = ComplicationEntry(
+                date: Date(),
+                departures: departures,
+                station: station,
+                destination: destination
+            )
             
 //            let timeline = Timeline(entries: entries, policy: .after(Date().addingTimeInterval(15 * 60)))
 //            completion(timeline)
@@ -32,7 +64,12 @@ struct ComplicationProvider: TimelineProvider {
         ComplicationEntry(
             date: Date(),
 //            departure: Departure(time: Date())
-            departures: [Departure(time: Date())]
+            departures: [Departure(time: Date())],
+//            station: station,
+//            destination: destination
+            station: "Zürich, Toni-Areal",
+            destination: "Zürich, Rathaus"
+
         )
     }
 }
@@ -41,6 +78,8 @@ struct ComplicationEntry: TimelineEntry {
     let date: Date
 //    let departure: Departure
     let departures: [Departure]
+    let station: String
+    let destination: String
 }
 
 struct ComplicationView: View {
@@ -125,7 +164,7 @@ struct AccessoryCornerView: View {
                       .resizable()
                       .aspectRatio(contentMode: .fit)
                       .widgetLabel {
-                          let times = entry.departures.prefix(2).map { timeFormatter.string(from: $0.time) }
+                          let times = entry.departures.prefix(3).map { timeFormatter.string(from: $0.time) }
 //                          Text(times.joined(separator: " | "))
                           Text(times.joined(separator: " • "))
 
@@ -133,6 +172,7 @@ struct AccessoryCornerView: View {
 //                              .monospacedDigit()
 //                              .foregroundStyle(.white.opacity(0.8))
                       }
+                  //this might be important for some weird reason
                       .onAppear {
                           layout = defaults.integer(forKey: "complicationLayout")
                       }
@@ -232,7 +272,8 @@ struct AccessoryCornerView: View {
     TramComplication()
 } timeline: {
 //    ComplicationEntry(date: Date(), departure: Departure(time: Date()))
-    ComplicationEntry(date: Date(), departures: [Departure(time: Date())])
+    ComplicationEntry(date: Date(), departures: [Departure(time: Date())], station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
+//    ComplicationEntry(date: Date(), departures: [Departure(time: Date())])
 
 }
 
