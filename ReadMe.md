@@ -11,8 +11,10 @@ Current links:
 
 To-Do:
 
-- [ ] Currently both WatchOS and IOS widgets only function in one direction --> change it so they accept the UserDefautls from the apps
+- Currently both WatchOS and IOS widgets only function in one direction --> change it so they accept the UserDefautls from the apps
 
+- [ ] Widget properly updating 
+- [x] WatchOS Complication properly updating
 - [x] Add apple watch complication so i can put it on a watch face
 - [x] Make widget display 3 departure times
 - [ ] Better interface to chose other stations
