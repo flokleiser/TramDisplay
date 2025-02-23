@@ -11,15 +11,18 @@ Current links:
 
 To-Do:
 
-- Currently both WatchOS and IOS widgets only function in one direction --> change it so they accept the UserDefautls from the apps
-- Also currently, WatchOS has its own implementation of TransportService --> adapt it from TransportData.swift like the ios app
+- Currently both WatchOS and IOS widgets only function in one direction -> change it so they accept the UserDefautls from the apps
+- Also currently, WatchOS has its own implementation of TransportService -> adapt it from TransportData.swift like the ios app
+
+- [ ] Rewrite phone widget completely
+- [ ] Rewrite WatchOS app to use TransportData.swift
+
 
 - [ ] Widget properly updating 
+- [ ] Better interface to choose other stations
 - [x] WatchOS Complication properly updating
 - [x] Add apple watch complication so i can put it on a watch face
 - [x] Make widget display 3 departure times
-- [ ] Better interface to chose other stations
-- [ ] Figure out if i can just have the widget, and no app
 
 Done:
 - [x] Apple watch app
