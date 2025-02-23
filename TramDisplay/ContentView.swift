@@ -1,10 +1,19 @@
 import SwiftUI
 import WebKit
 import Foundation
+import WidgetKit
+
+let appGroupIdentifier = "group.TramDisplay.sharedDefaults"
+let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+
 
 struct ContentView: View {
-    @AppStorage("selectedStation") private var selectedStation: String = "Zürich, Toni-Areal"
-    @AppStorage("selectedDestination") private var selectedDestination: String = "Zürich, Rathaus"
+//    @AppStorage("selectedStation") private var selectedStation: String = "Zürich, Toni-Areal"
+//    @AppStorage("selectedDestination") private var selectedDestination: String = "Zürich, Rathaus"
+    
+    @State private var selectedStation: String = UserDefaults(suiteName: appGroupIdentifier)?.string(forKey: "selectedStation") ?? "Zürich, Toni-Areal"
+    @State private var selectedDestination: String = UserDefaults(suiteName: appGroupIdentifier)?.string(forKey: "selectedDestination") ?? "Zürich, Rathaus"
+
     
     let stations = ["Zürich, Rathaus", "Zürich, Toni-Areal"]
     
@@ -33,9 +42,31 @@ struct ContentView: View {
                .padding()
                
                Button("Save Selection") {
-                   UserDefaults(suiteName: "group.TramDisplay.sharedDefaults")?.set(selectedStation, forKey: "selectedStation")
-                   UserDefaults(suiteName: "group.TramDisplay.sharedDefaults")?.set(selectedDestination, forKey: "selectedDestination")
+                   defaults.set(selectedStation, forKey: "selectedStation")
+                   defaults.set(selectedDestination, forKey: "selectedDestination")
+                   defaults.synchronize()
+
+
+//                   UserDefaults(suiteName: "group.TramDisplay.sharedDefaults")?.set(selectedStation, forKey: "selectedStation")
+//                   UserDefaults(suiteName: "group.TramDisplay.sharedDefaults")?.set(selectedDestination, forKey: "selectedDestination")
+//                   UserDefaults.synchronize()
+                   WidgetCenter.shared.reloadAllTimelines()
+
+
                    
+//                       .onChange(of: selectedStation) { oldValue, newValue in
+//                           defaults.set(newValue, forKey: "selectedStation")
+//                           defaults.synchronize()
+//                           transportService.fetchDepartures(station: newValue, destination: selectedDestination)
+//                           WidgetCenter.shared.reloadAllTimelines()
+//                       }
+//                       .onChange(of: selectedDestination) { oldValue, newValue in
+//                           defaults.set(newValue, forKey: "selectedDestination")
+//                           defaults.synchronize()
+//
+//                           transportService.fetchDepartures(station: selectedStation, destination: newValue)
+//                           WidgetCenter.shared.reloadAllTimelines()
+//                       }
 
                    transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
                }
@@ -54,7 +85,7 @@ struct ContentView: View {
                }
            }
            .onAppear {
-               transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
+               transportService.fetchDepartures(station: selectedStation, destination: selectedDestination )
            }
        }
    }

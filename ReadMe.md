@@ -12,6 +12,7 @@ Current links:
 To-Do:
 
 - Currently both WatchOS and IOS widgets only function in one direction --> change it so they accept the UserDefautls from the apps
+- Also currently, WatchOS has its own implementation of TransportService --> adapt it from TransportData.swift like the ios app
 
 - [ ] Widget properly updating 
 - [x] WatchOS Complication properly updating

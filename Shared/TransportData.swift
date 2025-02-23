@@ -8,14 +8,14 @@ struct Departure: Codable, Identifiable {
            case time
        }
 
-       init(time: Date) {
-           self.time = time
-       }
-
-       init(from decoder: Decoder) throws {
-           let container = try decoder.container(keyedBy: CodingKeys.self)
-           self.time = try container.decode(Date.self, forKey: .time)
-       }
+//       init(time: Date) {
+//           self.time = time
+//       }
+//
+//       init(from decoder: Decoder) throws {
+//           let container = try decoder.container(keyedBy: CodingKeys.self)
+//           self.time = try container.decode(Date.self, forKey: .time)
+//       }
 }
 
 
@@ -55,10 +55,11 @@ class TransportService: ObservableObject {
     @Published var departures: [Departure] = []
     @Published var isLoading = false
 
+//    func fetchDepartures(station: String, destination: String) {
     func fetchDepartures(station: String, destination: String) {
         let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? station)&limit=10"
         print("Departures from \(station) to \(destination)")
-        print("Fetching from URL: \(apiURL)")
+//        print("Fetching from URL: \(apiURL)")
 
 
         guard let url = URL(string: apiURL) else {
@@ -80,7 +81,7 @@ class TransportService: ObservableObject {
 
                         do {
                             let response = try JSONDecoder().decode(StationBoardResponse.self, from: data)
-                            print("Successfully decoded response with \(response.stationboard.count) connections")
+//                            print("Successfully decoded response with \(response.stationboard.count) connections")
 
                             let filteredDepartures = response.stationboard
                                 .filter { connection in
@@ -102,7 +103,7 @@ class TransportService: ObservableObject {
 
                             self.departures = Array(filteredDepartures)
                         } catch {
-                            print("Error decoding JSON: \(error)")
+//                            print("Error decoding JSON: \(error)")
 
                             if let decodingError = error as? DecodingError {
                                                    switch decodingError {
@@ -122,7 +123,55 @@ class TransportService: ObservableObject {
                     }
                 }.resume()
     }
+}
 
-
+extension TransportService {
+    func fetchDepartures(station: String, destination: String, completion: @escaping ([Departure]) -> Void) {
+        let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? station)&limit=10"
+        
+        guard let url = URL(string: apiURL) else {
+            completion([])
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error fetching data: \(error)")
+                completion([])
+                return
+            }
+            
+            guard let data = data else {
+                completion([])
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                
+                let response = try decoder.decode(StationBoardResponse.self, from: data)
+                let filteredDepartures = response.stationboard
+                    .filter { connection in
+                        connection.passList?.contains { pass in
+                            pass.station.name == destination
+                        } ?? false
+                    }
+                    .compactMap { connection -> Departure? in
+                        if let date = ISO8601DateFormatter().date(from: connection.stop.departure) {
+                            return Departure(time: date)
+                        }
+                        return nil
+                    }
+                    .prefix(3)
+                
+                completion(Array(filteredDepartures))
+                
+            } catch {
+                print("Error decoding JSON: \(error)")
+                completion([])
+            }
+        }.resume()
+    }
 }
 
