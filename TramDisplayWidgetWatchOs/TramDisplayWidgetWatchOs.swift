@@ -90,10 +90,12 @@ struct ComplicationView: View {
 //    }
 //}
 
+
 struct AccessoryCornerView: View {
     let entry: ComplicationEntry
     
-    @AppStorage("complicationLayout") private var layout: Int = 1  // 0 = Time Outer, 1 = Tram Icon Outer
+//    @AppStorage("complicationLayout") private var layout: Int = 1  // 0 = Time Outer, 1 = Tram Icon Outer
+    @State private var layout: Int = 1
     
     
     private let timeFormatter: DateFormatter = {
@@ -119,12 +121,20 @@ struct AccessoryCornerView: View {
               } else {
                   // Outer Tram Icon, Inner Time
                   Image(systemName: "tram.fill")
-                      .imageScale(.large)
+//                      .imageScale(.large)
+                      .resizable()
+                      .aspectRatio(contentMode: .fit)
                       .widgetLabel {
                           let times = entry.departures.prefix(2).map { timeFormatter.string(from: $0.time) }
-                          Text(times.joined(separator: " | "))
+//                          Text(times.joined(separator: " | "))
+                          Text(times.joined(separator: " • "))
+
                               .font(.system(size: 12))
-                              .foregroundStyle(.white.opacity(0.8))
+//                              .monospacedDigit()
+//                              .foregroundStyle(.white.opacity(0.8))
+                      }
+                      .onAppear {
+                          layout = defaults.integer(forKey: "complicationLayout")
                       }
               }
           }

@@ -2,6 +2,7 @@ import SwiftUI
 import WatchKit
 import ClockKit
 import Foundation
+import WidgetKit
 
 struct Departure: Identifiable, Codable {
     let id = UUID()
@@ -141,12 +142,17 @@ extension TransportService {
     }
 }
 
+let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
+let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+
 struct ContentView: View {
     @State private var selectedStation: String = "Zürich, Toni-Areal"
     @State private var selectedDestination: String = "Zürich, Rathaus"
     @StateObject private var transportService = TransportService()
 
-    @AppStorage("complicationLayout") private var layout: Int = 1
+//    @AppStorage("complicationLayout") private var layout: Int = 0
+    @State private var layout: Int = UserDefaults(suiteName: appGroupIdentifier)?.integer(forKey: "complicationLayout") ?? 0
+
 
     
     let stations = ["Zürich, Rathaus", "Zürich, Toni-Areal"]
@@ -215,11 +221,21 @@ struct ContentView: View {
                                   Text("Time Inner").tag(1)
                               }
 //                              .background(Color.gray.opacity(0.2))
-                              .cornerRadius(8) // Fixes double rounded backgrounds
+                              .cornerRadius(8)
+                              .onChange(of: layout) {oldValue, newValue in
+                                  defaults.set(newValue, forKey: "complicationLayout")
+                                  WidgetCenter.shared.reloadAllTimelines()
+                              }
+                      
                           }
                           .padding(.vertical, 6)
                       }
                   }
+        
+//            .onChange(of: layout) { oldValue, newValue in
+//                WidgetCenter.shared.reloadAllTimelines()
+////                UserDefaults.standard.set(newValue, forKey: "layout")
+//            }
             
             .onChange(of: selectedStation) { oldValue, newValue in
                 transportService.fetchDepartures(station: newValue, destination: selectedDestination)
@@ -239,21 +255,21 @@ struct ContentView: View {
     }
 }
 
-struct SettingsView: View {
-    @AppStorage("complicationLayout") private var layout: Int = 1
-    
-    var body: some View {
-        Form {
-            Picker("Layout", selection: $layout) {
-                Text("Time Outer").tag(0)
-                Text("Time Inner").tag(1)
-            }
-//            .pickerStyle(.segmented)
-//            .pickerStyle(SegmentedPickerStyle())
-            
-        }
-    }
-}
+//struct SettingsView: View {
+//    @AppStorage("complicationLayout") private var layout: Int = 1
+//    
+//    var body: some View {
+//        Form {
+//            Picker("Layout", selection: $layout) {
+//                Text("Time Outer").tag(0)
+//                Text("Time Inner").tag(1)
+//            }
+////            .pickerStyle(.segmented)
+////            .pickerStyle(SegmentedPickerStyle())
+//            
+//        }
+//    }
+//}
 
 #Preview {
     ContentView()
