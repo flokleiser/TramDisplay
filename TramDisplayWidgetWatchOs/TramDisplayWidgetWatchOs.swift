@@ -93,78 +93,91 @@ struct ComplicationView: View {
 struct AccessoryCornerView: View {
     let entry: ComplicationEntry
     
+    @AppStorage("complicationLayout") private var layout: Int = 1  // 0 = Time Outer, 1 = Tram Icon Outer
+    
+    
     private let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         formatter.locale = Locale(identifier: "de_CH")
         return formatter
     }()
-
-//    var body: some View {
-//        ZStack {
-//            AccessoryWidgetBackground()
-//            Image(systemName: "tram.fill")
-//                .imageScale(.small)
-//                .font(.caption2)
-//                .frame(width: 10, height: 10)
-//                .widgetCurvesContent()
-//            
-//                .widgetLabel {
-////                    Text(timeFormatter.string(from: entry.departure.time))
-////                    .font(.caption)
-//                    HStack(spacing: 2) {
-//                        Text(timeFormatter.string(from: entry.departure.time))
-//                        Text("•")
-//                        .foregroundStyle(.secondary)
-//                        Text(timeFormatter.string(from: entry.departure.time.addingTimeInterval(10 * 60)))
-//                        Text("•")
-//                        .foregroundStyle(.secondary)
-//                        Text(timeFormatter.string(from: entry.departure.time.addingTimeInterval(20 * 60)))
-//                    }
-//                    .font(.caption2)
-//                }
-////                .containerBackground(.white.gradient, for: .widget)
-//                  .containerBackground(.clear, for: .widget)
-//            
-//        }
-//    }
     
     var body: some View {
-        ZStack {
-//            Image(systemName: "tram.fill")
-            let times = entry.departures.prefix(1).map { timeFormatter.string(from: $0.time) }
-            Text(times.joined(separator: " • "))
-                    .font(.system(size: 12))
-
-
-                .widgetLabel {
-//                    Text("\(timeFormatter.string(from: entry.departure.time)) • \(timeFormatter.string(from: entry.departure.time.addingTimeInterval(10 * 60))) • \(timeFormatter.string(from: entry.departure.time.addingTimeInterval(20 * 60)))")
-                Text("Next Tram")
-                        .font(.system(size: 2))
-//                        .font(.caption)
-                 }
-        }
-                .widgetCurvesContent()
-                .containerBackground(.clear, for: .widget)
-        }
-
-}
+          ZStack {
+              if layout == 0 {
+                  // Outer Time, Inner Widget Name
+                  let times = entry.departures.prefix(1).map { timeFormatter.string(from: $0.time) }
+                  Text(times.joined(separator: " • "))
+                      .font(.system(size: 12))
+                      .widgetLabel {
+                          Text("Next Tram")
+                              .font(.system(size: 10))
+                              .foregroundStyle(.white.opacity(0.8))
+                      }
+                      .widgetCurvesContent()
+              } else {
+                  // Outer Tram Icon, Inner Time
+                  Image(systemName: "tram.fill")
+                      .imageScale(.large)
+                      .widgetLabel {
+                          let times = entry.departures.prefix(2).map { timeFormatter.string(from: $0.time) }
+                          Text(times.joined(separator: " | "))
+                              .font(.system(size: 12))
+                              .foregroundStyle(.white.opacity(0.8))
+                      }
+              }
+          }
+//          .widgetCurvesContent()
+          .containerBackground(.clear, for: .widget)
+      }
+  }
+            
     
-    
-// -kinda working
+// working --> outer time, inner widget name
 //    var body: some View {
-//           Image(systemName: "tram.fill")
-//               .imageScale(.small)
-//               .font(.system(size: 12))
-//               .widgetCurvesContent()
-//               .widgetLabel {
-//                   let times = entry.departures.prefix(3).map { timeFormatter.string(from: $0.time) }
-//                   Text(times.joined(separator: " • "))
-//                       .font(.system(size: 12))
-//               }
-//               .containerBackground(.clear, for: .widget)
-//       }
-//   }
+//        ZStack {
+//            let times = entry.departures.prefix(1).map { timeFormatter.string(from: $0.time) }
+//            Text(times.joined(separator: " • "))
+//                .font(.system(size: 12))
+//
+//
+//                .widgetLabel {
+//                   Text("Next Tram")
+//                            .font(.system(size: 10))
+//                            .foregroundStyle(.white.opacity(0.8))
+//
+//                 }
+//        }
+//                .widgetCurvesContent()
+//                .containerBackground(.clear, for: .widget)
+//        }
+//
+//}
+
+    
+// working --> outer tram icon, inner time
+//var body: some View {
+//    ZStack {
+//        Image(systemName: "tram.fill")
+//            .imageScale(.large)
+//            .widgetLabel {
+//                        let times = entry.departures.prefix(2).map { timeFormatter.string(from: $0.time) }
+////                        Text(times.joined(separator: " • "))
+//                        Text(times.joined(separator: " | "))
+//                            .font(.system(size: 12))
+//                            .foregroundStyle(.white.opacity(0.8))
+//
+//
+//                }
+//            }
+//            .containerBackground(.clear, for: .widget)
+//    }
+//
+//}
+
+    
+    
 
 
 //struct AccessoryRectangularView: View {

@@ -145,6 +145,9 @@ struct ContentView: View {
     @State private var selectedStation: String = "Zürich, Toni-Areal"
     @State private var selectedDestination: String = "Zürich, Rathaus"
     @StateObject private var transportService = TransportService()
+
+    @AppStorage("complicationLayout") private var layout: Int = 1
+
     
     let stations = ["Zürich, Rathaus", "Zürich, Toni-Areal"]
     
@@ -159,31 +162,31 @@ struct ContentView: View {
         List {
             Section(header:
                         HStack() {
-
-                               Image(systemName: "tram.fill")
+                
+                Image(systemName: "tram.fill")
                 Text("Next Departures").font(.headline)
             }
                 .padding(.top, -19.0)
                 .frame(height: 0.0)
             ) {
-               
-                     if transportService.isLoading {
-                        ProgressView()
-                     } else if transportService.departures.isEmpty {
-                        Text("No departures found")
+                
+                if transportService.isLoading {
+                    ProgressView()
+                } else if transportService.departures.isEmpty {
+                    Text("No departures found")
                         .foregroundColor(.secondary)
-                        } else {
-                            ForEach(transportService.departures) { departure in
-                            Text("\(departure.time, formatter: timeFormatter)")
-                                    .frame(height: 8)
-                        }
-                     }
-                  }
-
-                Section(header: HStack() {Image(systemName: "house.and.flag.fill")
-                    Text("Stations").font(.headline)
+                } else {
+                    ForEach(transportService.departures) { departure in
+                        Text("\(departure.time, formatter: timeFormatter)")
+                            .frame(height: 8)
+                    }
                 }
-                ) {
+            }
+            
+            Section(header: HStack() {Image(systemName: "house.and.flag.fill")
+                Text("Stations").font(.headline)
+            }
+            ) {
                 Picker("From", selection: $selectedStation) {
                     ForEach(stations, id: \.self) { station in
                         Text(station).tag(station)
@@ -197,26 +200,63 @@ struct ContentView: View {
                 }
             }
             
-        }
-        .onChange(of: selectedStation) { oldValue, newValue in
-                    transportService.fetchDepartures(station: newValue, destination: selectedDestination)
-                }
-                .onChange(of: selectedDestination) { oldValue, newValue in
-                    transportService.fetchDepartures(station: selectedStation, destination: newValue)
-                }
-                .onAppear {
-                    transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
-                }
-                .focusable()
-                .digitalCrownRotation(detent: $transportService.crownValue, from: 0, through: 1, by: 0.1, sensitivity: .medium, isContinuous: false, isHapticFeedbackEnabled: true) { _ in
-                    transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
-                }
+//            Section(header: HStack() {Image(systemName: "gear")
+//                Text("Settings").font(.headline)
+//            } {
 
-       
+            Section(header: Text("Settings").font(.headline)) {
+                          VStack(alignment: .leading, spacing: 10) {
+//                              Text("Complication Layout")
+//                                  .font(.subheadline)
+//                                  .bold()
+                              
+                              Picker("Layout", selection: $layout) {
+                                  Text("Time Outer").tag(0)
+                                  Text("Time Inner").tag(1)
+                              }
+//                              .background(Color.gray.opacity(0.2))
+                              .cornerRadius(8) // Fixes double rounded backgrounds
+                          }
+                          .padding(.vertical, 6)
+                      }
+                  }
+            
+            .onChange(of: selectedStation) { oldValue, newValue in
+                transportService.fetchDepartures(station: newValue, destination: selectedDestination)
+            }
+            .onChange(of: selectedDestination) { oldValue, newValue in
+                transportService.fetchDepartures(station: selectedStation, destination: newValue)
+            }
+            .onAppear {
+                transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
+            }
+            .focusable()
+            .digitalCrownRotation(detent: $transportService.crownValue, from: 0, through: 1, by: 0.1, sensitivity: .medium, isContinuous: false, isHapticFeedbackEnabled: true) { _ in
+                transportService.fetchDepartures(station: selectedStation, destination: selectedDestination)
+            }
+            
+          
+    }
+}
+
+struct SettingsView: View {
+    @AppStorage("complicationLayout") private var layout: Int = 1
+    
+    var body: some View {
+        Form {
+            Picker("Layout", selection: $layout) {
+                Text("Time Outer").tag(0)
+                Text("Time Inner").tag(1)
+            }
+//            .pickerStyle(.segmented)
+//            .pickerStyle(SegmentedPickerStyle())
+            
+        }
     }
 }
 
 #Preview {
     ContentView()
+//    SettingsView()
 }
 
