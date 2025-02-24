@@ -16,6 +16,8 @@
 		5C84B9252D610EBF00AA18B7 /* TramDisplayWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5C84B9122D610EBE00AA18B7 /* TramDisplayWidgetExtension.appex */; platformFilters = (ios, macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5C9BE2452D69FB1700C48703 /* TransportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BE2442D69FAA400C48703 /* TransportData.swift */; };
 		5C9BE2492D69FCC000C48703 /* TransportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BE2442D69FAA400C48703 /* TransportData.swift */; };
+		5CD2FC202D6CDEC8003B8E3B /* TransportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BE2442D69FAA400C48703 /* TransportData.swift */; };
+		5CD2FC212D6CDEC8003B8E3B /* TransportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9BE2442D69FAA400C48703 /* TransportData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -402,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CD2FC202D6CDEC8003B8E3B /* TransportData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CD2FC212D6CDEC8003B8E3B /* TransportData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

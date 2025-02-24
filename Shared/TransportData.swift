@@ -54,12 +54,13 @@ let timeFormatter: DateFormatter = {
 class TransportService: ObservableObject {
     @Published var departures: [Departure] = []
     @Published var isLoading = false
+    
+    @Published var crownValue: Double = 0
 
-//    func fetchDepartures(station: String, destination: String) {
+
     func fetchDepartures(station: String, destination: String) {
         let apiURL = "https://transport.opendata.ch/v1/stationboard?station=\(station.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? station)&limit=10"
         print("Departures from \(station) to \(destination)")
-//        print("Fetching from URL: \(apiURL)")
 
 
         guard let url = URL(string: apiURL) else {

@@ -2,8 +2,6 @@ import WidgetKit
 import SwiftUI
 import Foundation
 
-import os.log
-
 struct Provider: TimelineProvider {
     
     let transportService = TransportService()
@@ -34,10 +32,6 @@ struct Provider: TimelineProvider {
         let station = defaults.string(forKey: "selectedStation") ?? "Zürich, Toni-Areal"
         let destination = defaults.string(forKey: "selectedDestination") ?? "Zürich, Rathaus"
         
-        //        let userDefaults = UserDefaults(suiteName: "group.TramDisplay.sharedDefaults")
-        //        let station = userDefaults?.string(forKey: "selectedStation") ?? "Unknown Station"
-        //        let destination = userDefaults?.string(forKey: "selectedDestination") ?? "Unknown Destination"
-        
         fetchNextDeparture(station: station, destination: destination) { departureTimes in
             let entry = SimpleEntry(date: Date(), departureTimes: departureTimes,station:station, destination: destination)
             
@@ -46,39 +40,8 @@ struct Provider: TimelineProvider {
             completion(timeline)
         }
     }
-    
-    //struct Connection: Codable {
-    //    let stop: Stop
-    //}
-    //
-    //struct Stop: Codable {
-    //    let departure: Date
-    //}
-    
     func fetchNextDeparture(station: String, destination: String, completion: @escaping ([String]) -> Void) {
-        //    let apiUrl = "https://transport.opendata.ch/v1/stationboard?station=\(station)&limit=5"
-        //    
-        //    guard let url = URL(string: apiUrl) else {
-        //        completion(["Invalid URL"])
-        //        return
-        //    }
-        //
-        //    URLSession.shared.dataTask(with: url) { data, _, error in
-        //        if let data = data, let response = try? JSONDecoder().decode(StationBoardResponse.self, from: data) {
-        //            let departureTimes = response.stationboard.prefix(3).compactMap { connection -> String? in
-        //                if let departureDate = ISO8601DateFormatter().date(from: connection.stop.departure) {
-        //                    return timeFormatter.string(from: departureDate)
-        //                }
-        //                return nil
-        //            }
-        ////            let result = departureTimes.isEmpty ? "No data" : departureTimes.joined(separator: "\n")
-        ////                  completion(result)
-        //            completion(departureTimes.isEmpty ? ["No data"] : departureTimes)
-        //        } else {
-        //            completion(["No data"])
-        //        }
-        //    }.resume()
-        //}
+
         transportService.fetchDepartures(station: station, destination: destination) { departures in
             let departureTimes = departures.prefix(3).map { timeFormatter.string(from: $0.time) }
             completion(departureTimes.isEmpty ? ["No data"] : departureTimes)
@@ -101,29 +64,16 @@ struct YourWidgetEntryView: View {
                 ForEach(entry.departureTimes.prefix(3), id: \.self) { time in
                     HStack {
                         Image(systemName: "tram.fill")
-//                            .imageScale(.small)
                             .font(.system(size: 17))
                         Text(time)
                     }
                         .foregroundColor(.white)
                         .font(.system(size: 25, weight: .semibold))
-//                        .frame(width: 145, height: 35, alignment: .center)
-
-//                        .background(Color(red:41/255, green:43/255, blue:47/255))
                         .cornerRadius(10)
-
                 }
-                
-//                Spacer()
-//                Text("\(station) --> \(destination) ")
                 Text("From \(entry.station)")
-//                    .font(.caption)
                     .font(.system(size: 11))
-
-            
                     .foregroundColor(.gray)
-
-            
                 Text("Updated: \(entry.date, style: .time)")
                     .font(.caption)
                     .foregroundColor(.gray)

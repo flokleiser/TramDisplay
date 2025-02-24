@@ -132,7 +132,6 @@ struct AccessoryCornerView: View {
 #Preview(as: .accessoryCorner) {
     TramComplication()
 } timeline: {
-//    ComplicationEntry(date: Date(), departures: [Departure(time: Date())], station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
     ComplicationEntry(date: Date(), departures: [  Departure(time: Date().addingTimeInterval(600)),
                       Departure(time: Date().addingTimeInterval(1200)), // 20 minutes from now
                       Departure(time: Date().addingTimeInterval(1800))   // 30 minutes from now
