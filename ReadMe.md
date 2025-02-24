@@ -11,6 +11,8 @@ Current links:
 
 To-Do:
 
+Currently the two available tram stations are hard coded, tbd -> enable user input and then choose from list
+
 - [ ] Better interface to choose other stations
 - [x] Widget properly updating 
 - [x] Rewrite WatchOS app to use TransportData.swift
