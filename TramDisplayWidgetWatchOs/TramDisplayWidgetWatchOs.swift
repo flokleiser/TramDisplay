@@ -119,9 +119,9 @@ struct AccessoryCornerView: View {
                               .font(.system(size: 12))
                       }
                   //idk why but this breaks the preview
-                      .onAppear {
-                          layout = defaults.integer(forKey: "complicationLayout")
-                      }
+//                      .onAppear {
+//                          layout = defaults.integer(forKey: "complicationLayout")
+//                      }
               }
           }
           .containerBackground(.clear, for: .widget)

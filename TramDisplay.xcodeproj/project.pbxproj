@@ -81,7 +81,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5C2FDB952D6B62CF00FDCC15 /* TramDisplayWidgetWatchOsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TramDisplayWidgetWatchOsExtension.entitlements; sourceTree = "<group>"; };
 		5C428D9F2D620BA90078D285 /* TramDisplayWidgetWatchOs Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TramDisplayWidgetWatchOs Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C428DD12D620BE90078D285 /* TramDisplayWidgetWatchOsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TramDisplayWidgetWatchOsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C6075612D60C79F0039AB7B /* TramDisplay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TramDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,7 +185,6 @@
 		5C6075582D60C79F0039AB7B = {
 			isa = PBXGroup;
 			children = (
-				5C2FDB952D6B62CF00FDCC15 /* TramDisplayWidgetWatchOsExtension.entitlements */,
 				5C9BE2432D69FA8000C48703 /* Shared */,
 				5C6075632D60C79F0039AB7B /* TramDisplay */,
 				5C84B9182D610EBE00AA18B7 /* TramDisplayWidget */,
@@ -526,7 +524,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = TramDisplayWidgetWatchOsExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TramDisplayWidgetWatchOs/TramDisplayWidgetWatchOsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T3NX6T826Z;
@@ -557,7 +555,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = TramDisplayWidgetWatchOsExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TramDisplayWidgetWatchOs/TramDisplayWidgetWatchOsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T3NX6T826Z;
