@@ -13,8 +13,9 @@ To-Do:
 
 Currently the two available tram stations are hard coded, tbd -> enable user input and then choose from list
 
-- [ ] Add refresh button for apple watch app
+- [ ] Add more complication support
 - [ ] Better interface to choose other stations
+- [x] Add refresh button for apple watch app
 - [x] Widget properly updating 
 - [x] Rewrite WatchOS app to use TransportData.swift
 - [x] WatchOS Complication properly updating

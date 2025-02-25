@@ -7,15 +7,6 @@ struct Departure: Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
            case time
        }
-
-//       init(time: Date) {
-//           self.time = time
-//       }
-//
-//       init(from decoder: Decoder) throws {
-//           let container = try decoder.container(keyedBy: CodingKeys.self)
-//           self.time = try container.decode(Date.self, forKey: .time)
-//       }
 }
 
 
@@ -104,7 +95,6 @@ class TransportService: ObservableObject {
 
                             self.departures = Array(filteredDepartures)
                         } catch {
-//                            print("Error decoding JSON: \(error)")
 
                             if let decodingError = error as? DecodingError {
                                                    switch decodingError {

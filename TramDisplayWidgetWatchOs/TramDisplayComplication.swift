@@ -65,45 +65,129 @@ struct ComplicationView: View {
     let entry: ComplicationEntry
     
     @Environment(\.widgetFamily) var family
-    
-    private let timeFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: "de_CH")
-        return formatter
-    }()
+
     
     var body: some View {
         switch family {
         case .accessoryCorner:
             AccessoryCornerView(entry: entry)
+        case .accessoryCircular:
+            AccessoryCircularView(entry: entry)
+        case .accessoryRectangular:
+            AccessoryRectangularView(entry: entry)
+        case .accessoryInline:
+            AccessoryInlineView(entry: entry)
+
         default:
             AccessoryCornerView(entry: entry)
         }
     }
 }
 
+
+
 struct AccessoryCornerView: View {
     let entry: ComplicationEntry
     
-    @State private var layout: Int = 1
     
+    //uncomment this before run
+    var layout: Int {
+         let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
+         let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+         return defaults.integer(forKey: "complicationLayout")
+     }
     
-    private let timeFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: "de_CH")
-        return formatter
-    }()
+//    var layout: Int = 3
+
+    
+    var body: some View {
+        
+            ZStack {
+                if layout == 0 {
+                    let times = entry.departures.prefix(1).map { timeFormatter.string(from: $0.time) }
+                    Text(times.joined(separator: " • "))
+                        .font(.system(size: 12))
+                        .widgetLabel {
+                            
+                            Text("From \(entry.station.replacingOccurrences(of: "Zürich, ", with: ""))")
+                                .font(.system(size: 10))
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
+                        .widgetCurvesContent()
+                } else if layout == 1 {
+                    Image(systemName: "tram.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .widgetLabel {
+                            let times = entry.departures.prefix(3).map { timeFormatter.string(from: $0.time) }
+                            Text(times.joined(separator: " • "))
+                            
+                                .font(.system(size: 12))
+                        }
+                }
+                else {
+                    if let nextDeparture = entry.departures.first {
+                        
+                        let currentTime = Date()
+                        let departureTime = nextDeparture.time
+                        
+                        let timeUntilNextTram = departureTime.timeIntervalSince(currentTime) / 60
+                        let calendar = Calendar.current
+                        let isSunday = calendar.component(.weekday, from: currentTime) == 1
+                        let tramFrequency: Double = isSunday ? 10 : 7
+                        let progress = 1.0 - (timeUntilNextTram / tramFrequency)
+                        let clampedProgress = min(max(progress, 0.0), 1.0)
+                        
+//                        Image(systemName: "tram.fill")
+                        Text("\(Int(ceil(timeUntilNextTram)))m")
+                            .font(.system(size: 20, weight: .medium))
+                            .widgetLabel {
+                                Gauge(value: clampedProgress, in: 0...1) {
+
+//                                let times = entry.departures.prefix(3).map { timeFormatter.string(from: $0.time) }
+//                                Text(times.joined(separator: " • "))
+//                                
+//                                    .font(.system(size: 12))
+                                    VStack(spacing: 2) {
+                                        Text("\(Int(ceil(timeUntilNextTram))) mins")
+                                            .font(.system(size: 14, weight: .medium))
+                                        
+                                        Text(timeFormatter.string(from: departureTime))
+                                            .font(.system(size: 10))
+                                            .foregroundStyle(.white.opacity(0.8))
+                                    }
+                                }
+                            }
+                    } else {
+                        Text("No departures")
+                            .containerBackground(.clear, for: .widget)
+                    }
+
+               }
+        }
+            .containerBackground(.clear, for: .widget)
+
+    }
+  }
+
+struct AccessoryRectangularView: View {
+    let entry: ComplicationEntry
+    
+    var layout: Int {
+         let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
+         let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+         return defaults.integer(forKey: "complicationLayout")
+     }
     
     var body: some View {
           ZStack {
               if layout == 0 {
                   let times = entry.departures.prefix(1).map { timeFormatter.string(from: $0.time) }
-                  Text(times.joined(separator: " • "))
-                      .font(.system(size: 12))
+                      Text(times.joined(separator: " • "))
+                          .font(.system(size: 12))
                       .widgetLabel {
-                          Text("Next Tram")
+                        
+                        Text("From \(entry.station.replacingOccurrences(of: "Zürich, ", with: ""))")
                               .font(.system(size: 10))
                               .foregroundStyle(.white.opacity(0.8))
                       }
@@ -118,17 +202,99 @@ struct AccessoryCornerView: View {
 
                               .font(.system(size: 12))
                       }
-                  //idk why but this breaks the preview
-//                      .onAppear {
-//                          layout = defaults.integer(forKey: "complicationLayout")
-//                      }
               }
           }
           .containerBackground(.clear, for: .widget)
       }
   }
+
+struct AccessoryInlineView: View {
+    let entry: ComplicationEntry
+    
+    var layout: Int {
+         let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
+         let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+         return defaults.integer(forKey: "complicationLayout")
+     }
+    
+    var body: some View {
+          ZStack {
+                  let times = entry.departures.prefix(3).map { timeFormatter.string(from: $0.time) }
+//                      Text(times.joined(separator: " • "))
+                      Text(times.joined(separator: " | "))
+
+                          .font(.system(size: 12))
+                      .widgetLabel {
+                        
+                        Text("From \(entry.station.replacingOccurrences(of: "Zürich, ", with: ""))")
+                              .font(.system(size: 10))
+                              .foregroundStyle(.white.opacity(0.8))
+                      }
+                      .widgetCurvesContent()
+          }
+          .containerBackground(.clear, for: .widget)
+      }
+  }
+
+struct AccessoryCircularView: View {
+    let entry: ComplicationEntry
+    
+    var layout: Int {
+         let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
+         let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+         return defaults.integer(forKey: "complicationLayout")
+     }
+    
+    var body: some View {
+           if let nextDeparture = entry.departures.first {
+               let currentTime = Date()
+               let departureTime = nextDeparture.time
+               
+               let timeUntilNextTram = departureTime.timeIntervalSince(currentTime) / 60
+               let calendar = Calendar.current
+               let isSunday = calendar.component(.weekday, from: currentTime) == 1
+               let tramFrequency: Double = isSunday ? 10 : 7
+               let progress = 1.0 - (timeUntilNextTram / tramFrequency)
+               let clampedProgress = min(max(progress, 0.0), 1.0)
+               
+               Gauge(value: clampedProgress, in: 0...1) {
+                   VStack(spacing: 2) {
+                                     Text("\(Int(ceil(timeUntilNextTram)))m")
+                                         .font(.system(size: 14, weight: .medium))
+                                     
+                                     Text(timeFormatter.string(from: departureTime))
+                                         .font(.system(size: 10))
+                                         .foregroundStyle(.white.opacity(0.8))
+                        }
+               }
+               .gaugeStyle(.accessoryCircular)
+               .tint(.green)
+               .widgetLabel {
+                   Text("\(Int(ceil(timeUntilNextTram)))m")
+                       .font(.system(size: 12))
+                       .foregroundStyle(.white)
+               }
+               .containerBackground(.clear, for: .widget)
+
+           } else {
+               Text("--")
+                   .font(.system(size: 12))
+                   .widgetLabel {
+                       Text("From \(entry.station.replacingOccurrences(of: "Zürich, ", with: ""))")
+                           .font(.system(size: 10))
+                           .foregroundStyle(.white.opacity(0.8))
+                   }
+                   .containerBackground(.clear, for: .widget)
+           }
+       }
+   }
+
+
+
             
     
+
+//previews
 #Preview(as: .accessoryCorner) {
     TramComplication()
 } timeline: {
@@ -138,6 +304,41 @@ struct AccessoryCornerView: View {
                   ], station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
 
 }
+
+
+
+#Preview(as: .accessoryRectangular) {
+    TramComplication()
+} timeline: {
+    ComplicationEntry(date: Date(), departures: [  Departure(time: Date().addingTimeInterval(600)),
+                      Departure(time: Date().addingTimeInterval(1200)), // 20 minutes from now
+                      Departure(time: Date().addingTimeInterval(1800))   // 30 minutes from now
+                  ], station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
+
+}
+
+#Preview(as: .accessoryInline) {
+    TramComplication()
+} timeline: {
+    ComplicationEntry(date: Date(), departures: [  Departure(time: Date().addingTimeInterval(600)),
+                      Departure(time: Date().addingTimeInterval(1200)), // 20 minutes from now
+                      Departure(time: Date().addingTimeInterval(1800))   // 30 minutes from now
+                  ], station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
+
+}
+
+#Preview(as: .accessoryCircular) {
+    TramComplication()
+} timeline: {
+    ComplicationEntry(date: Date(), departures: [  Departure(time: Date().addingTimeInterval(600)),
+                      Departure(time: Date().addingTimeInterval(1200)), // 20 minutes from now
+                      Departure(time: Date().addingTimeInterval(1800))   // 30 minutes from now
+                  ], station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
+
+}
+
+
+
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
@@ -166,6 +367,9 @@ struct TramComplication: Widget {
         .description("Shows the next tram departure time")
         .supportedFamilies([
             .accessoryCorner,
+            .accessoryCircular,
+            .accessoryInline,
+            .accessoryRectangular
         ])
     }
 }

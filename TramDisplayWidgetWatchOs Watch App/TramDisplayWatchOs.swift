@@ -57,15 +57,27 @@ struct ContentView: View {
                         Text(station).tag(station)
                     }
                 }
+                Button("Reload") {
+                    WidgetCenter.shared.reloadAllTimelines()
+                    print("test")
+                }
             }
             
 
-            Section(header: Text("Settings").font(.headline)) {
+            Section(header: HStack() {
+                Image(systemName: "gearshape")
+                Text("Settings").font(.headline)
+            }
+            )
+            {
+                    
                           VStack(alignment: .leading, spacing: 10) {
                               
                               Picker("Layout", selection: $layout) {
                                   Text("Time Outer").tag(0)
                                   Text("Time Inner").tag(1)
+                                  Text("Time Until").tag(2)
+
                               }
                               .cornerRadius(8)
                               .onChange(of: layout) {oldValue, newValue in
