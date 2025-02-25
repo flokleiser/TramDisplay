@@ -130,24 +130,21 @@ struct AccessoryCornerView: View {
                         
                         let currentTime = Date()
                         let departureTime = nextDeparture.time
+                        let nextIndex = 1
                         
-                        let timeUntilNextTram = departureTime.timeIntervalSince(currentTime) / 60
-                        let calendar = Calendar.current
-                        let isSunday = calendar.component(.weekday, from: currentTime) == 1
-                        let tramFrequency: Double = isSunday ? 10 : 7
-                        let progress = 1.0 - (timeUntilNextTram / tramFrequency)
-                        let clampedProgress = min(max(progress, 0.0), 1.0)
+                        if entry.departures.indices.contains(nextIndex) {
+                                let nextDepartureTime = entry.departures[nextIndex].time
+                                let tramFrequency = nextDepartureTime.timeIntervalSince(departureTime) / 60
+                                
+                                let timeUntilNextTram = departureTime.timeIntervalSince(currentTime) / 60
+                                let progress = 1.0 - (timeUntilNextTram / tramFrequency)
+                                let clampedProgress = min(max(progress, 0.0), 1.0)
                         
 //                        Image(systemName: "tram.fill")
                         Text("\(Int(ceil(timeUntilNextTram)))m")
                             .font(.system(size: 20, weight: .medium))
                             .widgetLabel {
                                 Gauge(value: clampedProgress, in: 0...1) {
-
-//                                let times = entry.departures.prefix(3).map { timeFormatter.string(from: $0.time) }
-//                                Text(times.joined(separator: " • "))
-//                                
-//                                    .font(.system(size: 12))
                                     VStack(spacing: 2) {
                                         Text("\(Int(ceil(timeUntilNextTram))) mins")
                                             .font(.system(size: 14, weight: .medium))
@@ -158,10 +155,12 @@ struct AccessoryCornerView: View {
                                     }
                                 }
                             }
+                        }
                     } else {
                         Text("No departures")
                             .containerBackground(.clear, for: .widget)
                     }
+                        
 
                }
         }
