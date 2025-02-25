@@ -245,35 +245,40 @@ struct AccessoryCircularView: View {
      }
     
     var body: some View {
-           if let nextDeparture = entry.departures.first {
-               let currentTime = Date()
-               let departureTime = nextDeparture.time
-               
-               let timeUntilNextTram = departureTime.timeIntervalSince(currentTime) / 60
-               let calendar = Calendar.current
-               let isSunday = calendar.component(.weekday, from: currentTime) == 1
-               let tramFrequency: Double = isSunday ? 10 : 7
-               let progress = 1.0 - (timeUntilNextTram / tramFrequency)
-               let clampedProgress = min(max(progress, 0.0), 1.0)
-               
-               Gauge(value: clampedProgress, in: 0...1) {
-                   VStack(spacing: 2) {
-                                     Text("\(Int(ceil(timeUntilNextTram)))m")
-                                         .font(.system(size: 14, weight: .medium))
-                                     
-                                     Text(timeFormatter.string(from: departureTime))
-                                         .font(.system(size: 10))
-                                         .foregroundStyle(.white.opacity(0.8))
-                        }
-               }
-               .gaugeStyle(.accessoryCircular)
-               .tint(.green)
-               .widgetLabel {
-                   Text("\(Int(ceil(timeUntilNextTram)))m")
-                       .font(.system(size: 12))
-                       .foregroundStyle(.white)
-               }
-               .containerBackground(.clear, for: .widget)
+        if let nextDeparture = entry.departures.first {
+            
+            let currentTime = Date()
+            let departureTime = nextDeparture.time
+            let nextIndex = 1
+            
+            if entry.departures.indices.contains(nextIndex) {
+                let nextDepartureTime = entry.departures[nextIndex].time
+                let tramFrequency = nextDepartureTime.timeIntervalSince(departureTime) / 60
+                
+                let timeUntilNextTram = departureTime.timeIntervalSince(currentTime) / 60
+                let progress = 1.0 - (timeUntilNextTram / tramFrequency)
+                let clampedProgress = min(max(progress, 0.0), 1.0)
+                
+                //
+                Gauge(value: clampedProgress, in: 0...1) {
+                    VStack(spacing: 2) {
+                        Text("\(Int(ceil(timeUntilNextTram)))m")
+                            .font(.system(size: 14, weight: .medium))
+                        
+                        Text(timeFormatter.string(from: departureTime))
+                            .font(.system(size: 10))
+                            .foregroundStyle(.white.opacity(0.8))
+                    }
+                }
+                .gaugeStyle(.accessoryCircular)
+                .tint(.green)
+                .widgetLabel {
+                    Text("\(Int(ceil(timeUntilNextTram)))m")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.white)
+                }
+                .containerBackground(.clear, for: .widget)
+            }
 
            } else {
                Text("--")
