@@ -74,8 +74,8 @@ struct ContentView: View {
                           VStack(alignment: .leading, spacing: 10) {
                               
                               Picker("Layout", selection: $layout) {
-                                  Text("Time Outer").tag(0)
-                                  Text("Time Inner").tag(1)
+                                  Text("One Departure").tag(0)
+                                  Text("Three Departures").tag(1)
                                   Text("Time Until").tag(2)
 
                               }

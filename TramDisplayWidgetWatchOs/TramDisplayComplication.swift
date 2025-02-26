@@ -91,13 +91,13 @@ struct AccessoryCornerView: View {
     
     
     //uncomment this before run
-//    var layout: Int {
-//         let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
-//         let defaults = UserDefaults(suiteName: appGroupIdentifier)!
-//         return defaults.integer(forKey: "complicationLayout")
-//     }
+    var layout: Int {
+         let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
+         let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+         return defaults.integer(forKey: "complicationLayout")
+     }
     
-    var layout: Int = 3
+//    var layout: Int = 0
 
     
     var body: some View {
@@ -121,6 +121,8 @@ struct AccessoryCornerView: View {
                         .widgetLabel {
                             let times = entry.departures.prefix(3).map { timeFormatter.string(from: $0.time) }
                             Text(times.joined(separator: " • "))
+//                            Text(times.joined(separator: " | "))
+
                             
                                 .font(.system(size: 12))
                         }
@@ -140,24 +142,26 @@ struct AccessoryCornerView: View {
                                 let progress = 1.0 - (timeUntilNextTram / tramFrequency)
                                 let clampedProgress = min(max(progress, 0.0), 1.0)
                         
-                        Text("\(Int(ceil(timeUntilNextTram)))m")
+                        Text("\(Int(ceil(timeUntilNextTram)))'")
                                 .widgetCurvesContent()
                                 .font(.system(size: 10, weight: .medium))
+                                .textCase(.lowercase)
                             .widgetLabel {
                                 Gauge(value: clampedProgress, in: 0...1) {
+                                    Text("")
+                                } currentValueLabel: {
+                                    Text("")
 
-//                                    VStack(spacing: 2) {
-////                                        Text("\(Int(ceil(timeUntilNextTram))) mins")
-//                                        Text("test")
-//                                            .font(.system(size: 14, weight: .medium))
-//                                        
-//                                        Text(timeFormatter.string(from: departureTime))
-//                                            .font(.system(size: 10))
-//                                            .foregroundStyle(.white.opacity(0.8))
-//                                    }
+                                } minimumValueLabel: {
+                                    Image(systemName: "tram.fill")
+                                        .font(.system(size: 10))
+                                } maximumValueLabel: {
+//                                    Image(systemName: "clock.fill")
+                                    Image(systemName: "tram.fill")
+                                        .font(.system(size: 10))
                                 }
+                              }
                             }
-                        }
                     } else {
                         Text("No departures")
                             .containerBackground(.clear, for: .widget)
@@ -218,21 +222,84 @@ struct AccessoryInlineView: View {
          return defaults.integer(forKey: "complicationLayout")
      }
     
-    var body: some View {
-          ZStack {
-                  let times = entry.departures.prefix(3).map { timeFormatter.string(from: $0.time) }
-//                      Text(times.joined(separator: " • "))
-                      Text(times.joined(separator: " | "))
+//        var layout: Int = 0
 
-                          .font(.system(size: 12))
-                      .widgetLabel {
+    
+    var body: some View {
+        ZStack {
+            if layout == 0 {
+                
+                let times = entry.departures.prefix(1).map { timeFormatter.string(from: $0.time) }
+                HStack() {
+                    Text(times.joined(separator: " • "))
+                    Text("From \(entry.station.replacingOccurrences(of: "Zürich, ", with: ""))")
+                        .font(.system(size: 10))
+                        .foregroundStyle(.white.opacity(0.8))
+                }
+
+                
+                    .font(.system(size: 12))
+                    .widgetLabel {
                         
                         Text("From \(entry.station.replacingOccurrences(of: "Zürich, ", with: ""))")
-                              .font(.system(size: 10))
-                              .foregroundStyle(.white.opacity(0.8))
-                      }
-                      .widgetCurvesContent()
-          }
+                            .font(.system(size: 10))
+                            .foregroundStyle(.white.opacity(0.8))
+                    }
+                    .widgetCurvesContent()
+            } else if layout == 1 {
+                let times = entry.departures.prefix(3).map { timeFormatter.string(from: $0.time) }
+                  Text(times.joined(separator: " • "))
+//                Text(times.joined(separator: " | "))
+                
+                    .font(.system(size: 12))
+                    .widgetLabel {
+                        
+                        Text("From \(entry.station.replacingOccurrences(of: "Zürich, ", with: ""))")
+                            .font(.system(size: 10))
+                            .foregroundStyle(.white.opacity(0.8))
+                    }
+                    .widgetCurvesContent()
+            } else {
+                if let nextDeparture = entry.departures.first {
+                    
+                    let currentTime = Date()
+                    let departureTime = nextDeparture.time
+                    let nextIndex = 1
+                    
+                    if entry.departures.indices.contains(nextIndex) {
+                            let nextDepartureTime = entry.departures[nextIndex].time
+                            let tramFrequency = nextDepartureTime.timeIntervalSince(departureTime) / 60
+                            
+                            let timeUntilNextTram = departureTime.timeIntervalSince(currentTime) / 60
+                            let progress = 1.0 - (timeUntilNextTram / tramFrequency)
+                            let clampedProgress = min(max(progress, 0.0), 1.0)
+                    
+                    Text("\(Int(ceil(timeUntilNextTram)))'")
+                            .widgetCurvesContent()
+                            .font(.system(size: 10, weight: .medium))
+                            .textCase(.lowercase)
+                        .widgetLabel {
+                            Gauge(value: clampedProgress, in: 0...1) {
+                                Text("")
+                            } currentValueLabel: {
+                                Text("")
+
+                            } minimumValueLabel: {
+                                Image(systemName: "tram.fill")
+                                    .font(.system(size: 10))
+                            } maximumValueLabel: {
+//                                    Image(systemName: "clock.fill")
+                                Image(systemName: "tram.fill")
+                                    .font(.system(size: 10))
+                            }
+                          }
+                        }
+                } else {
+                    Text("No departures")
+                        .containerBackground(.clear, for: .widget)
+                }
+            }
+        }
           .containerBackground(.clear, for: .widget)
       }
   }
@@ -264,7 +331,7 @@ struct AccessoryCircularView: View {
                 //
                 Gauge(value: clampedProgress, in: 0...1) {
                     VStack(spacing: 2) {
-                        Text("\(Int(ceil(timeUntilNextTram)))m")
+                        Text("\(Int(ceil(timeUntilNextTram)))'")
                             .font(.system(size: 14, weight: .medium))
                         
                         Text(timeFormatter.string(from: departureTime))
@@ -273,9 +340,9 @@ struct AccessoryCircularView: View {
                     }
                 }
                 .gaugeStyle(.accessoryCircular)
-                .tint(.green)
+                .tint(.white)
                 .widgetLabel {
-                    Text("\(Int(ceil(timeUntilNextTram)))m")
+                    Text("\(Int(ceil(timeUntilNextTram)))'")
                         .font(.system(size: 12))
                         .foregroundStyle(.white)
                 }
