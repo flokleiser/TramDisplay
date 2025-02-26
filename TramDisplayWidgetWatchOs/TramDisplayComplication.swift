@@ -91,13 +91,13 @@ struct AccessoryCornerView: View {
     
     
     //uncomment this before run
-    var layout: Int {
-         let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
-         let defaults = UserDefaults(suiteName: appGroupIdentifier)!
-         return defaults.integer(forKey: "complicationLayout")
-     }
+//    var layout: Int {
+//         let appGroupIdentifier = "group.TramDisplayWatchOs.sharedDefaults"
+//         let defaults = UserDefaults(suiteName: appGroupIdentifier)!
+//         return defaults.integer(forKey: "complicationLayout")
+//     }
     
-//    var layout: Int = 3
+    var layout: Int = 3
 
     
     var body: some View {
@@ -140,19 +140,21 @@ struct AccessoryCornerView: View {
                                 let progress = 1.0 - (timeUntilNextTram / tramFrequency)
                                 let clampedProgress = min(max(progress, 0.0), 1.0)
                         
-//                        Image(systemName: "tram.fill")
                         Text("\(Int(ceil(timeUntilNextTram)))m")
-                            .font(.system(size: 20, weight: .medium))
+                                .widgetCurvesContent()
+                                .font(.system(size: 10, weight: .medium))
                             .widgetLabel {
                                 Gauge(value: clampedProgress, in: 0...1) {
-                                    VStack(spacing: 2) {
-                                        Text("\(Int(ceil(timeUntilNextTram))) mins")
-                                            .font(.system(size: 14, weight: .medium))
-                                        
-                                        Text(timeFormatter.string(from: departureTime))
-                                            .font(.system(size: 10))
-                                            .foregroundStyle(.white.opacity(0.8))
-                                    }
+
+//                                    VStack(spacing: 2) {
+////                                        Text("\(Int(ceil(timeUntilNextTram))) mins")
+//                                        Text("test")
+//                                            .font(.system(size: 14, weight: .medium))
+//                                        
+//                                        Text(timeFormatter.string(from: departureTime))
+//                                            .font(.system(size: 10))
+//                                            .foregroundStyle(.white.opacity(0.8))
+//                                    }
                                 }
                             }
                         }
@@ -292,10 +294,6 @@ struct AccessoryCircularView: View {
            }
        }
    }
-
-
-
-            
     
 
 //previews
@@ -306,9 +304,7 @@ struct AccessoryCircularView: View {
                       Departure(time: Date().addingTimeInterval(1200)), // 20 minutes from now
                       Departure(time: Date().addingTimeInterval(1800))   // 30 minutes from now
                   ], station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
-
 }
-
 
 
 #Preview(as: .accessoryRectangular) {
@@ -340,8 +336,6 @@ struct AccessoryCircularView: View {
                   ], station: "Zürich, Toni-Areal", destination: "Zürich, Rathaus")
 
 }
-
-
 
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
