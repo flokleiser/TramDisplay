@@ -19,32 +19,11 @@ struct ContentView: View {
     
     var body: some View {
         List {
-            Section(header:
-                        HStack() {
-                
-                Image(systemName: "tram.fill")
-                Text("Next Departures").font(.headline)
-            }
-                .padding(.top, -19.0)
-                .frame(height: 0.0)
-            ) {
-                
-                if transportService.isLoading {
-                    ProgressView()
-                } else if transportService.departures.isEmpty {
-                    Text("No departures found")
-                        .foregroundColor(.secondary)
-                } else {
-                    ForEach(transportService.departures) { departure in
-                        Text("\(departure.time, formatter: timeFormatter)")
-                            .frame(height: 8)
-                    }
-                }
-            }
-            
+
             Section(header: HStack() {Image(systemName: "house.and.flag.fill")
                 Text("Stations").font(.headline)
             }
+                .padding(.top, -19.0)
             ) {
                 Picker("From", selection: $selectedStation) {
                     ForEach(stations, id: \.self) { station in
@@ -60,6 +39,26 @@ struct ContentView: View {
                 Button("Reload") {
                     WidgetCenter.shared.reloadAllTimelines()
                     print("test")
+                }
+            }
+
+            Section(header: HStack() {Image(systemName: "tram.fill")
+                Text("Next Departures").font(.headline)
+            }
+                // .padding(.top, -19.0)
+                // .frame(height: 0.0)
+            ) {
+                
+                if transportService.isLoading {
+                    ProgressView()
+                } else if transportService.departures.isEmpty {
+                    Text("No departures found")
+                        .foregroundColor(.secondary)
+                } else {
+                    ForEach(transportService.departures) { departure in
+                        Text("\(departure.time, formatter: timeFormatter)")
+                            .frame(height: 8)
+                    }
                 }
             }
             
