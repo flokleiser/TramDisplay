@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/flo/Code/TramDisplay/.build/arm64-apple-macosx/debug/TramDisplayWatchApp.build/master.swiftdeps"
+  },
+  "/Users/flo/Code/TramDisplay/TramDisplayWidgetWatchOs Watch App/TramDisplayWatchOs.swift": {
+    "dependencies": "/Users/flo/Code/TramDisplay/.build/arm64-apple-macosx/debug/TramDisplayWatchApp.build/TramDisplayWatchOs.d",
+    "object": "/Users/flo/Code/TramDisplay/.build/arm64-apple-macosx/debug/TramDisplayWatchApp.build/TramDisplayWatchOs.swift.o",
+    "swiftmodule": "/Users/flo/Code/TramDisplay/.build/arm64-apple-macosx/debug/TramDisplayWatchApp.build/TramDisplayWatchOs~partial.swiftmodule",
+    "swift-dependencies": "/Users/flo/Code/TramDisplay/.build/arm64-apple-macosx/debug/TramDisplayWatchApp.build/TramDisplayWatchOs.swiftdeps"
+  }
+}
